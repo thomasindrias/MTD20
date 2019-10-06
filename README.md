@@ -1,6 +1,6 @@
-# mtd20
+# MTD 2020
 
-Medieteknikdagarna är arbetsmarknadsdagarna för medieteknikprogrammet på Linköpings universitet. För nittonde året i rad förenar vi hundratals studenter och företag i industrin. Här hittar du all information och alla kontaktuppgifter du kan tänkas behöva.
+Appen för Medieteknikdagar 2020.
 
 ## Getting Started
 
