@@ -78,40 +78,40 @@ class _HomePageState extends State<HomePage> {
                 Icons.dashboard,
                 color: Colors.red,
               ),
-              title: Text("Home")),
+              title: Text("Hem")),
           BubbleBottomBarItem(
               backgroundColor: Color(0xffec6610),
               icon: Icon(
-                Icons.access_time,
+                Icons.calendar_today,
                 color: Colors.black,
               ),
               activeIcon: Icon(
-                Icons.access_time,
+                Icons.calendar_today,
                 color: Colors.red,
               ),
-              title: Text("Logs")),
+              title: Text("Schema")),
           BubbleBottomBarItem(
               backgroundColor: Color(0xffec6610),
               icon: Icon(
-                Icons.folder_open,
+                Icons.business,
                 color: Colors.black,
               ),
               activeIcon: Icon(
-                Icons.folder_open,
+                Icons.business,
                 color: Colors.red,
               ),
-              title: Text("Folders")),
+              title: Text("Företag")),
           BubbleBottomBarItem(
               backgroundColor: Color(0xffec6610),
               icon: Icon(
-                Icons.menu,
+                Icons.info,
                 color: Colors.black,
               ),
               activeIcon: Icon(
-                Icons.menu,
+                Icons.info,
                 color: Colors.red,
               ),
-              title: Text("Menu"))
+              title: Text("Om"))
         ],
       ),
     );
