@@ -40,21 +40,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        backgroundColor: Color(0xffec6610),
-      ),
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          changePage(index);
-        },
-        children: <Widget>[
-          FirstPage(),
-          SecondPage(),
-          ThirdPage(),
-          FourthPage()
-        ],
+      body: SafeArea(
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            changePage(index);
+          },
+          children: <Widget>[
+            FirstPage(),
+            SecondPage(),
+            ThirdPage(),
+            FourthPage()
+          ],
+        ),
       ),
       bottomNavigationBar: BubbleBottomBar(
         hasNotch: true,
