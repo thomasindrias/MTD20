@@ -1,14 +1,15 @@
-import 'package:mtd20/models/character.dart';
+import 'package:mtd20/models/business.dart';
 import 'package:mtd20/pages/character_detail_screen.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:flutter/material.dart';
 
 class CharacterWidget extends StatelessWidget {
-  final Character character;
+  final Both character;
   final PageController pageController;
   final int currentPage;
 
-  const CharacterWidget({Key key, this.character, this.pageController, this.currentPage})
+  const CharacterWidget(
+      {Key key, this.character, this.pageController, this.currentPage})
       : super(key: key);
 
   @override
@@ -22,7 +23,8 @@ class CharacterWidget extends StatelessWidget {
             context,
             PageRouteBuilder(
                 transitionDuration: const Duration(milliseconds: 350),
-                pageBuilder: (context, _, __) => CharacterDetailScreen(character: character)));
+                pageBuilder: (context, _, __) =>
+                    CharacterDetailScreen(character: character)));
       },
       child: AnimatedBuilder(
         animation: pageController,
@@ -42,8 +44,8 @@ class CharacterWidget extends StatelessWidget {
                   child: Hero(
                     tag: "background-${character.name}",
                     child: Container(
-                      height: 0.6 * screenHeight,
-                      width: 0.9 * screenWidth,
+                      height: 0.5 * screenHeight,
+                      width: 0.8 * screenWidth,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: character.colors,
@@ -56,17 +58,20 @@ class CharacterWidget extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: Alignment(0, -0.5),
+                alignment: Alignment(0, -0.4),
                 child: Hero(
                   tag: "image-${character.name}",
-                  child: Image.asset(
-                    character.imagePath,
-                    height: screenHeight * 0.55 * value,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.network(
+                      character.image,
+                      height: screenHeight * 0.35 * value,
+                    ),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 48, right: 16, bottom: 16),
+                padding: const EdgeInsets.only(left: 60, right: 16, bottom: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -106,15 +111,17 @@ class CharacterCardBackgroundClipper extends CustomClipper<Path> {
 
     clippedPath.moveTo(0, size.height * 0.4);
     clippedPath.lineTo(0, size.height - curveDistance);
-    clippedPath.quadraticBezierTo(1, size.height - 1, 0 + curveDistance, size.height);
+    clippedPath.quadraticBezierTo(
+        1, size.height - 1, 0 + curveDistance, size.height);
     clippedPath.lineTo(size.width - curveDistance, size.height);
-    clippedPath.quadraticBezierTo(
-        size.width + 1, size.height - 1, size.width, size.height - curveDistance);
+    clippedPath.quadraticBezierTo(size.width + 1, size.height - 1, size.width,
+        size.height - curveDistance);
     clippedPath.lineTo(size.width, 0 + curveDistance);
-    clippedPath.quadraticBezierTo(
-        size.width - 1, 0, size.width - curveDistance - 5, 0 + curveDistance / 3);
+    clippedPath.quadraticBezierTo(size.width - 1, 0,
+        size.width - curveDistance - 5, 0 + curveDistance / 3);
     clippedPath.lineTo(curveDistance, size.height * 0.29);
-    clippedPath.quadraticBezierTo(1, (size.height * 0.30) + 10, 0, size.height * 0.4);
+    clippedPath.quadraticBezierTo(
+        1, (size.height * 0.30) + 10, 0, size.height * 0.4);
     return clippedPath;
   }
 

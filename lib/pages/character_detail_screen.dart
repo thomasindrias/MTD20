@@ -1,5 +1,5 @@
 import 'package:after_layout/after_layout.dart';
-import 'package:mtd20/models/character.dart';
+import 'package:mtd20/models/business.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +7,7 @@ class CharacterDetailScreen extends StatefulWidget {
   // final double _expandedBottomSheetBottomPosition = 0;
   final double _collapsedBottomSheetBottomPosition = -250;
   final double _completeCollapsedBottomSheetBottomPosition = -330;
-  final Character character;
+  final Both character;
 
   const CharacterDetailScreen({Key key, this.character}) : super(key: key);
 
@@ -53,7 +53,8 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                     color: Colors.white.withOpacity(0.9),
                     onPressed: () {
                       setState(() {
-                        _bottomSheetBottomPosition = widget._completeCollapsedBottomSheetBottomPosition;
+                        _bottomSheetBottomPosition =
+                            widget._completeCollapsedBottomSheetBottomPosition;
                       });
                       Navigator.pop(context);
                     },
@@ -63,20 +64,27 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                   alignment: Alignment.topRight,
                   child: Hero(
                       tag: "image-${widget.character.name}",
-                      child: Image.asset(widget.character.imagePath, height: screenHeight * 0.45)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.network(widget.character.image,
+                            height: screenHeight * 0.45),
+                      )),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8),
                   child: Hero(
                       tag: "name-${widget.character.name}",
                       child: Material(
                           color: Colors.transparent,
-                          child:
-                              Container(child: Text(widget.character.name, style: AppTheme.heading)))),
+                          child: Container(
+                              child: Text(widget.character.name,
+                                  style: AppTheme.heading)))),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(32, 0, 8, 32),
-                  child: Text(widget.character.description, style: AppTheme.subHeading),
+                  child:
+                      Text(widget.character.info, style: AppTheme.subHeading),
                 ),
               ],
             ),

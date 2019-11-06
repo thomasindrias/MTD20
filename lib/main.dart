@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 8,
         items: <BubbleBottomBarItem>[
           BubbleBottomBarItem(
-              backgroundColor: Color(0xffec6610),
+              backgroundColor: Colors.deepOrange.shade200,
               icon: Icon(
                 Icons.dashboard,
                 color: Colors.black,
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
               ),
               title: Text("Hem")),
           BubbleBottomBarItem(
-              backgroundColor: Color(0xffec6610),
+              backgroundColor: Colors.deepOrange.shade200,
               icon: Icon(
                 Icons.calendar_today,
                 color: Colors.black,
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
               ),
               title: Text("Schema")),
           BubbleBottomBarItem(
-              backgroundColor: Color(0xffec6610),
+              backgroundColor: Colors.deepOrange.shade200,
               icon: Icon(
                 Icons.business,
                 color: Colors.black,
@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
               ),
               title: Text("Företag")),
           BubbleBottomBarItem(
-              backgroundColor: Color(0xffec6610),
+              backgroundColor: Colors.deepOrange.shade200,
               icon: Icon(
                 Icons.info,
                 color: Colors.black,
