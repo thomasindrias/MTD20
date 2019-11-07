@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:mtd20/widgets/character_widget.dart';
@@ -5,6 +6,8 @@ import 'package:mtd20/pages/character_detail_screen.dart';
 import 'package:mtd20/models/business.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ThirdPage extends StatefulWidget {
   @override
@@ -21,6 +24,24 @@ class _ThirdPageState extends State<ThirdPage> {
       const IconData(0xe800, fontFamily: _kFontFam);
 
   PageController _pageController;
+
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    if (mounted) setState(() {});
+    _refreshController.loadComplete();
+  }
 
   int currentPage = 0;
   @override
@@ -78,41 +99,81 @@ class _ThirdPageState extends State<ThirdPage> {
             Expanded(
               child: business == null
                   ? Center(child: CircularProgressIndicator())
-                  : ListView(shrinkWrap: true, children: <Widget>[
-                      SizedBox(height: 20),
-                      Container(
-                        height: 400,
-                        child: PageView(
-                          physics: ClampingScrollPhysics(),
-                          controller: _pageController,
-                          children: [
-                            for (var i = 0; i < 2; i++)
-                              CharacterWidget(
-                                  character: business.samarbetspartners[i],
-                                  pageController: _pageController,
-                                  currentPage: i)
-                          ],
-                        ),
+                  : SmartRefresher(
+                      enablePullDown: true,
+                      header: WaterDropHeader(),
+                      footer: CustomFooter(
+                        builder: (BuildContext context, LoadStatus mode) {
+                          Widget body;
+                          if (mode == LoadStatus.loading) {
+                            body = CupertinoActivityIndicator();
+                          } else if (mode == LoadStatus.failed) {
+                            body = Text("Försök igen");
+                          }
+                          return Container(
+                            height: 55.0,
+                            child: Center(child: body),
+                          );
+                        },
                       ),
-                      SizedBox(height: 40),
-                      Padding(
-                        padding: EdgeInsets.only(left: 15),
-                        child: Text("Silverpartners", style: AppTheme.display3),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 5.0),
-                        height: 200,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          physics: ScrollPhysics(),
-                          primary: false,
-                          children: business.both
-                              .map((foretag) => Container(
-                                  width: 180, child: _buildCard(foretag)))
-                              .toList(),
+                      controller: _refreshController,
+                      onRefresh: _onRefresh,
+                      onLoading: _onLoading,
+                      child: ListView(shrinkWrap: true, children: <Widget>[
+                        SizedBox(height: 20),
+                        Container(
+                          height: 400,
+                          child: PageView(
+                            physics: ClampingScrollPhysics(),
+                            controller: _pageController,
+                            children: [
+                              for (var i = 0; i < 2; i++)
+                                CharacterWidget(
+                                    character: business.samarbetspartners[i],
+                                    pageController: _pageController,
+                                    currentPage: i)
+                            ],
+                          ),
                         ),
-                      )
-                    ]),
+                        SizedBox(height: 40),
+                        Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child:
+                              Text("Silverpartners", style: AppTheme.display3),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                          height: 200,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            physics: ScrollPhysics(),
+                            primary: false,
+                            children: business.both
+                                .map((foretag) => Container(
+                                    width: 180, child: _buildCard(foretag)))
+                                .toList(),
+                          ),
+                        ),
+                        SizedBox(height: 40),
+                        Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child:
+                              Text("Bronspartners", style: AppTheme.display3),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                          height: 200,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            physics: ScrollPhysics(),
+                            primary: false,
+                            children: business.onsdag
+                                .map((foretag) => Container(
+                                    width: 180, child: _buildCard(foretag)))
+                                .toList(),
+                          ),
+                        )
+                      ])),
             ),
           ],
         ),
