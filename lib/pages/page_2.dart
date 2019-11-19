@@ -62,7 +62,7 @@ class _SecondPageState extends State<SecondPage> {
               child: RichText(
                 text: TextSpan(
                   children: [
-                    TextSpan(text: "Hem", style: AppTheme.display1),
+                    TextSpan(text: "Schema", style: AppTheme.display1),
                     TextSpan(text: "\n"),
                   ],
                 ),

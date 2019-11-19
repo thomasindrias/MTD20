@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mtd20/styleguide.dart';
-import 'package:mtd20/widgets/character_widget.dart';
-import 'package:mtd20/pages/character_detail_screen.dart';
+import 'package:mtd20/widgets/business_widget.dart';
+import 'package:mtd20/pages/business_detail_screen.dart';
 import 'package:mtd20/models/business.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

@@ -1,5 +1,7 @@
 import 'package:after_layout/after_layout.dart';
-import 'package:mtd20/models/business.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mtd20/models/character.dart';
+import 'package:mtd20/services/contact_service.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +9,7 @@ class CharacterDetailScreen extends StatefulWidget {
   // final double _expandedBottomSheetBottomPosition = 0;
   final double _collapsedBottomSheetBottomPosition = -250;
   final double _completeCollapsedBottomSheetBottomPosition = -330;
-  final Both character;
+  final Character character;
 
   const CharacterDetailScreen({Key key, this.character}) : super(key: key);
 
@@ -20,9 +22,22 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
   double _bottomSheetBottomPosition = -330;
   bool isCollapsed = false;
 
+  GetIt locator = GetIt();
+
+  void setupLocator() {
+    locator.registerSingleton(CallsAndMessagesService());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setupLocator();
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
 
     return Scaffold(
       body: Stack(
@@ -43,6 +58,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
           SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 SizedBox(height: 40),
                 Padding(
@@ -66,8 +82,10 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                       tag: "image-${widget.character.name}",
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Image.network(widget.character.image,
-                            height: screenHeight * 0.45),
+                        child: Center(
+                          child: Image.asset(widget.character.imagePath,
+                              height: screenHeight * 0.45),
+                        ),
                       )),
                 ),
                 Padding(
@@ -84,7 +102,59 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                 Padding(
                   padding: const EdgeInsets.fromLTRB(32, 0, 8, 32),
                   child:
-                      Text(widget.character.info, style: AppTheme.subHeading),
+                      Text(widget.character.role, style: AppTheme.subHeading),
+                ),
+                Container(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Ink(
+                          decoration: ShapeDecoration(
+                            color: Colors.deepOrange.shade200,
+                            shape: CircleBorder(),
+                          ),
+                          child: IconButton(
+                            icon: Icon(Icons.phone),
+                            iconSize: 46,
+                            color: Colors.white,
+                            onPressed: () =>
+                                _service.call(widget.character.number),
+                          ),
+                        ),
+                        Ink(
+                          decoration: ShapeDecoration(
+                            color: Colors.deepOrange.shade200,
+                            shape: CircleBorder(),
+                          ),
+                          child: IconButton(
+                            icon: Icon(Icons.sms),
+                            iconSize: 46,
+                            color: Colors.white,
+                            onPressed: () =>
+                                _service.sendSms(widget.character.number),
+                          ),
+                        ),
+                        Ink(
+                          decoration: ShapeDecoration(
+                            color: Colors.deepOrange.shade200,
+                            shape: CircleBorder(),
+                          ),
+                          child: IconButton(
+                            icon: Icon(Icons.email),
+                            iconSize: 46,
+                            color: Colors.white,
+                            onPressed: () =>
+                                _service.sendEmail(widget.character.number),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

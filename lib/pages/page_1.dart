@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mtd20/models/article.dart';
+import 'package:mtd20/pages/article_detail_screen.dart';
 import 'package:mtd20/styleguide.dart';
-import 'package:mtd20/models/business.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -13,9 +14,10 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
-  var url = "https://aneromz.github.io/utstallare.json";
+  final Color bgColor = Color(0xffF3F3F3);
+  final Color primaryColor = Color(0xffE70F0B);
 
-  Business business;
+  var url = "https://aneromz.github.io/utstallare.json";
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
@@ -43,10 +45,8 @@ class _FirstPageState extends State<FirstPage> {
   }
 
   fetchData() async {
-    var res = await http.get(url);
-    var decodedJson = jsonDecode(res.body);
-
-    business = Business.fromJson(decodedJson);
+    //var res = await http.get(url);
+    //var decodedJson = jsonDecode(res.body);
 
     setState(() {});
   }
@@ -87,7 +87,7 @@ class _FirstPageState extends State<FirstPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
-              child: business == null
+              child: articles == null
                   ? Center(child: CircularProgressIndicator())
                   : SmartRefresher(
                       enablePullDown: true,
@@ -109,14 +109,116 @@ class _FirstPageState extends State<FirstPage> {
                       controller: _refreshController,
                       onRefresh: _onRefresh,
                       onLoading: _onLoading,
-                      child: ListView(
-                        children: <Widget>[SizedBox(height: 20), Text("hej")],
-                      ),
-                    ),
+                      child: _buildArticles(articles)),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildArticles(List articles) {
+    return ListView(
+      padding: const EdgeInsets.all(16.0),
+      children: <Widget>[
+        const SizedBox(height: 16.0),
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    ArticleDetailScreen(article: articles[0])));
+          },
+          child: Card(
+            elevation: 4.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Stack(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      height: 200.0,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10.0),
+                            topRight: Radius.circular(10.0),
+                          ),
+                          image: DecorationImage(
+                            image: CachedNetworkImageProvider(
+                                articles[0].imagePath),
+                            fit: BoxFit.cover,
+                          )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        articles[0].title,
+                        style: AppTheme.articleTitleStyle,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            articles[0].time,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          Spacer(),
+                          Text(
+                            articles[0].author,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20.0),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 10.0),
+        Divider(),
+        for (var i = 1; i < articles.length; i++) _buildCard(articles[i])
+      ],
+    );
+  }
+
+  Widget _buildCard(Article article) {
+    return Padding(
+        padding:
+            EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ArticleDetailScreen(article: article)));
+          },
+          child: ListTile(
+            title: Text(
+              article.title,
+              style: AppTheme.articleTitleStyle,
+            ),
+            subtitle: Text(article.time),
+            trailing: Container(
+              width: 80.0,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  image: DecorationImage(
+                    image: CachedNetworkImageProvider(article.imagePath),
+                    fit: BoxFit.cover,
+                  )),
+            ),
+          ),
+        ));
   }
 }

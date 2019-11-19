@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
     keepPage: true,
   );
 
+
   @override
   void initState() {
     super.initState();
@@ -109,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                 Icons.info,
                 color: Colors.red,
               ),
-              title: Text("Om"))
+              title: Text("Kontakt"))
         ],
       ),
     );

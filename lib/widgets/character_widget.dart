@@ -1,10 +1,10 @@
-import 'package:mtd20/models/business.dart';
+import 'package:mtd20/models/character.dart';
 import 'package:mtd20/pages/character_detail_screen.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:flutter/material.dart';
 
 class CharacterWidget extends StatelessWidget {
-  final Both character;
+  final Character character;
   final PageController pageController;
   final int currentPage;
 
@@ -63,9 +63,9 @@ class CharacterWidget extends StatelessWidget {
                   tag: "image-${character.name}",
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Image.network(
-                      character.image,
-                      height: screenHeight * 0.35 * value,
+                    child: Image.asset(
+                      character.imagePath,
+                      height: screenHeight * 0.38 * value,
                     ),
                   ),
                 ),
@@ -82,7 +82,7 @@ class CharacterWidget extends StatelessWidget {
                         color: Colors.transparent,
                         child: Container(
                           child: Text(
-                            character.name,
+                            character.role,
                             style: AppTheme.heading,
                           ),
                         ),

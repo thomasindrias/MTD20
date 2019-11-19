@@ -26,6 +26,10 @@ dependencies:
   after_layout: ^1.0.7+2
   http: ^0.12.0+2
   pull_to_refresh: ^1.4.5
+  get_it: ^1.0.3+2
+  url_launcher: ^5.2.5
+  cached_network_image: ^1.1.1
+  flutter_linkify: ^2.1.0
 
 dev_dependencies:
   flutter_test:

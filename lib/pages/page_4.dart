@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mtd20/styleguide.dart';
-import 'package:mtd20/models/business.dart';
+import 'package:mtd20/models/character.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:mtd20/widgets/character_widget.dart';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -13,9 +13,12 @@ class FourthPage extends StatefulWidget {
 }
 
 class _FourthPageState extends State<FourthPage> {
-  var url = "https://aneromz.github.io/utstallare.json";
+  //var url =
+  //"https://raw.githubusercontent.com/aneromz/Test1/master/om/kontakt.json";
 
-  Business business;
+  //Character character;
+
+  PageController _pageController;
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
@@ -36,23 +39,31 @@ class _FourthPageState extends State<FourthPage> {
   }
 
   int currentPage = 0;
+  final String aboutTitle = "Medieteknikdagarna 2020";
+  final String about =
+      "Medieteknikdagarna är ett ideellt arrangemang drivet av och för studenter. 2020 går dagarna av stapeln för tjugonde gången. Syftet är att knyta kontakter mellan studenter, medietekniker ute i arbetslivet och företagen inom branschen.";
   @override
   void initState() {
     super.initState();
-    fetchData();
+    _pageController = PageController(
+        viewportFraction: 1.0, initialPage: currentPage, keepPage: false);
+    //fetchData();
   }
 
+  /*
   fetchData() async {
     var res = await http.get(url);
     var decodedJson = jsonDecode(res.body);
 
-    business = Business.fromJson(decodedJson);
+    //character = Character.fromJson(decodedJson);
 
     setState(() {});
   }
-
+*/
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(85),
@@ -62,7 +73,7 @@ class _FourthPageState extends State<FourthPage> {
               child: RichText(
                 text: TextSpan(
                   children: [
-                    TextSpan(text: "Hem", style: AppTheme.display1),
+                    TextSpan(text: "Om", style: AppTheme.display1),
                     TextSpan(text: "\n"),
                   ],
                 ),
@@ -87,7 +98,7 @@ class _FourthPageState extends State<FourthPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
-              child: business == null
+              child: characters == null
                   ? Center(child: CircularProgressIndicator())
                   : SmartRefresher(
                       enablePullDown: true,
@@ -110,7 +121,58 @@ class _FourthPageState extends State<FourthPage> {
                       onRefresh: _onRefresh,
                       onLoading: _onLoading,
                       child: ListView(
-                        children: <Widget>[SizedBox(height: 20), Text("hej")],
+                        children: <Widget>[
+                          Container(
+                            height: screenHeight * 0.85,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  height: screenHeight * 0.45,
+                                  child: PageView(
+                                    physics: ClampingScrollPhysics(),
+                                    controller: _pageController,
+                                    children: [
+                                      for (var i = 0;
+                                          i < characters.length;
+                                          i++)
+                                        CharacterWidget(
+                                            character: characters[i],
+                                            pageController: _pageController,
+                                            currentPage: i)
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 20.0),
+                                Container(
+                                  height: screenHeight * 0.35,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Text(
+                                          aboutTitle,
+                                          style: AppTheme.displayBold,
+                                        ),
+                                      ),
+                                      Divider(),
+                                      Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: Text(
+                                          about,
+                                          style:
+                                              AppTheme.articleDescriptionStyle,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
             ),

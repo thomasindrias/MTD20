@@ -3,23 +3,90 @@ import 'package:flutter/material.dart';
 class Character {
   final String name;
   final String imagePath;
-  final String description;
+  final String role;
+  final String email;
+  final String number;
   final List<Color> colors;
 
-  Character({this.name, this.imagePath, this.description, this.colors});
+  Character({
+    this.name,
+    this.imagePath,
+    this.role,
+    this.email,
+    this.number,
+    this.colors,
+  });
 }
 
 List characters = [
   Character(
-      name: "Cygni",
-      imagePath: "assets/images/cygni_logo.png",
-      description:
-          "Cygni grundades med visionen att skapa den bästa arbetsplatsen för en skicklig och ambitiös systemutvecklare. Vi har vunnit titeln Sveriges Bästa Arbetsplats 5 år i rad och dessutom vunnit titeln Europas Bästa Arbetsplats 4 gånger i Great Place To Works världsledande medarbetarundersökning som genomförs i över 50 länder: ett fint kvitto på våra ambitioner. \n\nLäs mer på medieteknikdagarna.se",
+      name: "Philip Ngo",
+      imagePath: "assets/images/profile_leader.png",
+      role: "Projektledare",
+      email: "philip.ngo@medieteknikdagarna.se",
+      number: "07x-xxxxxxx",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
-      name: "Gaia",
-      imagePath: "assets/images/gaia_logo.png",
-      description:
-          "Välkommen till Gaia! Vi är en digitaliseringsbyrå som hjälper företag att digitaliseras. Vi utvecklar deras tjänster eller produkter med nya digitala lösningar, smart strategi och avancerad analys. Själva tanken är att det ska vara superenkelt och roligt att använda de nya lösningarna, så att våra kunder blir mer attraktiva hos sina kunder, medarbetare eller medborgare.\n\nLäs mer på medieteknikdagarna.se",
-      colors: [Colors.purpleAccent.shade200, Colors.purpleAccent.shade400]),
+      name: "August Kroon",
+      imagePath: "assets/images/profile_assistent.png",
+      role: "Projektassistent",
+      email: "august.kroon@medieteknikdagarna.se",
+      number: "07x-xxxxxxx",
+      colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
+  Character(
+      name: "Emma Segolsson",
+      imagePath: "assets/images/profile_foretag.png",
+      role: "Bankettansvarig",
+      email: "emma.segolsson@medieteknikdagarna.se",
+      number: "07x-xxxxxxx",
+      colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
+  Character(
+      name: "Thomas Indrias",
+      imagePath: "assets/images/profile_app.png",
+      role: "Appansvarig",
+      email: "thomas.indrias@medieteknikdagarna.se",
+      number: "073-9882609",
+      colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
+  Character(
+      name: "Ebba Nilsson",
+      imagePath: "assets/images/profile_bankett.png",
+      role: "Bankettansvarig",
+      email: "ebba.nilsson@medieteknikdagarna.se",
+      number: "07x-xxxxxxx",
+      colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
+  Character(
+      name: "Simon Brefält",
+      imagePath: "assets/images/profile_massa.png",
+      role: "Mässansvarig",
+      email: "simon.brefält@medieteknikdagarna.se",
+      number: "07x-xxxxxxx",
+      colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
+  Character(
+      name: "William Uddmyr",
+      imagePath: "assets/images/profile_pr.png",
+      role: "PR-ansvarig",
+      email: "william.uddmyr@medieteknikdagarna.se",
+      number: "07x-xxxxxxx",
+      colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
+  Character(
+      name: "Henrik Rosander",
+      imagePath: "assets/images/profile_tryck.png",
+      role: "Tryckansvarig",
+      email: "henrik.rosander@medieteknikdagarna.se",
+      number: "07x-xxxxxxx",
+      colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
+  Character(
+      name: "Marcus Gladh",
+      imagePath: "assets/images/profile_forelasning.png",
+      role: "Föreläsningsansvarig",
+      email: "marcus.gladh@medieteknikdagarna.se",
+      number: "07x-xxxxxxx",
+      colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
+  Character(
+      name: "Isak Engström",
+      imagePath: "assets/images/profile_koordinator.png",
+      role: "Koordinator",
+      email: "isak.engstrom@medieteknikdagarna.se",
+      number: "07x-xxxxxxx",
+      colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
 ];
