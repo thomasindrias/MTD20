@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:mtd20/widgets/business_widget.dart';
 import 'package:mtd20/pages/business_detail_screen.dart';
@@ -211,7 +213,9 @@ class _ThirdPageState extends State<ThirdPage> {
                             width: 100.0,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: NetworkImage(business.image),
+                                    image: CachedNetworkImageProvider(
+                                      business.image,
+                                    ),
                                     fit: BoxFit.contain)))),
                   ),
                   Expanded(

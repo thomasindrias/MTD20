@@ -1,4 +1,6 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mtd20/models/business.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:flutter/material.dart';
@@ -69,8 +71,14 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Center(
-                          child: Image.network(widget.character.image,
-                              height: screenHeight * 0.45),
+                          child: CachedNetworkImage(
+                            placeholder: (context, url) => SpinKitPulse(
+                              color: Colors.white,
+                              size: 100.0,
+                            ),
+                            imageUrl: widget.character.image,
+                            height: screenHeight * 0.45,
+                          ),
                         ),
                       )),
                 ),

@@ -10,7 +10,7 @@ class ArticleDetailScreen extends StatefulWidget {
   // final double _expandedBottomSheetBottomPosition = 0;
   final double _collapsedBottomSheetBottomPosition = -250;
   final double _completeCollapsedBottomSheetBottomPosition = -330;
-  final Article article;
+  final ArticleElement article;
 
   const ArticleDetailScreen({Key key, this.article}) : super(key: key);
 

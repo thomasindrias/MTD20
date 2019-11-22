@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mtd20/models/article.dart';
@@ -17,7 +19,9 @@ class _FirstPageState extends State<FirstPage> {
   final Color bgColor = Color(0xffF3F3F3);
   final Color primaryColor = Color(0xffE70F0B);
 
-  var url = "https://aneromz.github.io/utstallare.json";
+  var url = "https://thomasindrias.github.io/mtd/data/articles.json";
+
+  Article article;
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
@@ -45,8 +49,9 @@ class _FirstPageState extends State<FirstPage> {
   }
 
   fetchData() async {
-    //var res = await http.get(url);
-    //var decodedJson = jsonDecode(res.body);
+    var res = await http.get(url);
+    var decodedJson = jsonDecode(res.body);
+    article = Article.fromJson(decodedJson);
 
     setState(() {});
   }
@@ -87,7 +92,7 @@ class _FirstPageState extends State<FirstPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
-              child: articles == null
+              child: article == null
                   ? Center(child: CircularProgressIndicator())
                   : SmartRefresher(
                       enablePullDown: true,
@@ -109,7 +114,8 @@ class _FirstPageState extends State<FirstPage> {
                       controller: _refreshController,
                       onRefresh: _onRefresh,
                       onLoading: _onLoading,
-                      child: _buildArticles(articles)),
+                      child: _buildArticles(article.articles),
+                    ),
             ),
           ],
         ),
@@ -117,7 +123,7 @@ class _FirstPageState extends State<FirstPage> {
     );
   }
 
-  Widget _buildArticles(List articles) {
+  Widget _buildArticles(articles) {
     return ListView(
       padding: const EdgeInsets.all(16.0),
       children: <Widget>[
@@ -189,12 +195,13 @@ class _FirstPageState extends State<FirstPage> {
         ),
         const SizedBox(height: 10.0),
         Divider(),
-        for (var i = 1; i < articles.length; i++) _buildCard(articles[i])
+        for (var i = 1; i < articles.length; i++)
+          _buildCard(article.articles[i])
       ],
     );
   }
 
-  Widget _buildCard(Article article) {
+  Widget _buildCard(ArticleElement article) {
     return Padding(
         padding:
             EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),

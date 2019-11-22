@@ -1,10 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mtd20/models/event.dart';
+import 'package:mtd20/pages/event_detail_screen.dart';
 import 'package:mtd20/styleguide.dart';
-import 'package:mtd20/models/business.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SecondPage extends StatefulWidget {
@@ -13,9 +14,12 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPageState extends State<SecondPage> {
-  var url = "https://aneromz.github.io/utstallare.json";
+  final Color bgColor = Color(0xffF3F3F3);
+  final Color primaryColor = Color(0xffE70F0B);
 
-  Business business;
+  var url = "https://thomasindrias.github.io/mtd/data/events.json";
+
+  Events events;
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
@@ -45,8 +49,7 @@ class _SecondPageState extends State<SecondPage> {
   fetchData() async {
     var res = await http.get(url);
     var decodedJson = jsonDecode(res.body);
-
-    business = Business.fromJson(decodedJson);
+    events = Events.fromJson(decodedJson);
 
     setState(() {});
   }
@@ -87,7 +90,7 @@ class _SecondPageState extends State<SecondPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
-              child: business == null
+              child: events == null
                   ? Center(child: CircularProgressIndicator())
                   : SmartRefresher(
                       enablePullDown: true,
@@ -109,14 +112,115 @@ class _SecondPageState extends State<SecondPage> {
                       controller: _refreshController,
                       onRefresh: _onRefresh,
                       onLoading: _onLoading,
-                      child: ListView(
-                        children: <Widget>[SizedBox(height: 20), Text("hej")],
-                      ),
+                      child: _buildArticles(events.events),
                     ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildArticles(events) {
+    return ListView(
+      padding: const EdgeInsets.all(16.0),
+      children: <Widget>[
+        const SizedBox(height: 16.0),
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => EventDetailScreen(event: events[0])));
+          },
+          child: Card(
+            elevation: 4.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Stack(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      height: 200.0,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10.0),
+                            topRight: Radius.circular(10.0),
+                          ),
+                          image: DecorationImage(
+                            image: CachedNetworkImageProvider(events[0].image),
+                            fit: BoxFit.cover,
+                          )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        events[0].title,
+                        style: AppTheme.articleTitleStyle,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            events[0].start,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          Spacer(),
+                          Text(
+                            events[0].host,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20.0),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 10.0),
+        Divider(),
+        for (var i = 1; i < events.length; i++) _buildCard(events[i])
+      ],
+    );
+  }
+
+  Widget _buildCard(Event event) {
+    return Padding(
+        padding:
+            EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => EventDetailScreen(event: event)));
+          },
+          child: ListTile(
+            title: Text(
+              event.title,
+              style: AppTheme.articleTitleStyle,
+            ),
+            subtitle: Text(event.start),
+            trailing: Container(
+              width: 80.0,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  image: DecorationImage(
+                    image: CachedNetworkImageProvider(event.image),
+                    fit: BoxFit.cover,
+                  )),
+            ),
+          ),
+        ));
   }
 }
