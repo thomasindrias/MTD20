@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
+import 'package:flutter/services.dart';
 import 'package:mtd20/pages/page_1.dart';
 import 'package:mtd20/pages/page_2.dart';
 import 'package:mtd20/pages/page_3.dart';
 import 'package:mtd20/pages/page_4.dart';
 
-void main() => runApp(MaterialApp(
+void main() { 
+  
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+    .then((_) {
+      runApp(MaterialApp(
       title: "MTD20",
       home: HomePage(title: 'MTD20'),
       debugShowCheckedModeBanner: false,
     ));
+    });
+    }
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);

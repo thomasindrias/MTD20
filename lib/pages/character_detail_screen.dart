@@ -42,171 +42,179 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
     final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
 
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Hero(
-            tag: "background-${widget.character.name}",
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: widget.character.colors,
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
+      body: Dismissible(
+        movementDuration: Duration(milliseconds: 10),
+        direction: DismissDirection.vertical,
+        key: Key('key'),
+        onDismissed: (direction) {
+          Navigator.pop(context);
+        },
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Hero(
+              tag: "background-${widget.character.name}",
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: widget.character.colors,
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                  ),
                 ),
               ),
             ),
-          ),
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(height: 40),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, left: 16),
-                  child: IconButton(
-                    iconSize: 40,
-                    icon: Icon(Icons.close),
-                    color: Colors.white.withOpacity(0.9),
-                    onPressed: () {
-                      setState(() {
-                        _bottomSheetBottomPosition =
-                            widget._completeCollapsedBottomSheetBottomPosition;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Hero(
-                      tag: "image-${widget.character.name}",
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                          child: CachedNetworkImage(
-                            placeholder: (context, url) => SpinKitPulse(
-                              color: Colors.white,
-                              size: 100.0,
-                            ),
-                            imageUrl: widget.character.imagePath,
-                            height: screenHeight * 0.45,
-                          ),
-                        ),
-                      )),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8),
-                  child: Hero(
-                      tag: "name-${widget.character.name}",
-                      child: Material(
-                          color: Colors.transparent,
-                          child: Container(
-                              child: Text(widget.character.name,
-                                  style: AppTheme.heading)))),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 0, 8, 32),
-                  child:
-                      Text(widget.character.role, style: AppTheme.subHeading),
-                ),
-                Container(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Ink(
-                          decoration: ShapeDecoration(
-                            color: Colors.deepOrange.shade200,
-                            shape: CircleBorder(),
-                          ),
-                          child: IconButton(
-                            icon: Icon(Icons.phone),
-                            iconSize: 46,
-                            color: Colors.white,
-                            onPressed: () =>
-                                _service.call(widget.character.number),
-                          ),
-                        ),
-                        Ink(
-                          decoration: ShapeDecoration(
-                            color: Colors.deepOrange.shade200,
-                            shape: CircleBorder(),
-                          ),
-                          child: IconButton(
-                            icon: Icon(Icons.sms),
-                            iconSize: 46,
-                            color: Colors.white,
-                            onPressed: () =>
-                                _service.sendSms(widget.character.number),
-                          ),
-                        ),
-                        Ink(
-                          decoration: ShapeDecoration(
-                            color: Colors.deepOrange.shade200,
-                            shape: CircleBorder(),
-                          ),
-                          child: IconButton(
-                            icon: Icon(Icons.email),
-                            iconSize: 46,
-                            color: Colors.white,
-                            onPressed: () =>
-                                _service.sendEmail(widget.character.number),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )
-          /*
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.decelerate,
-            bottom: _bottomSheetBottomPosition,
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40),
-                  topRight: Radius.circular(40),
-                ),
-              ),
+            SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  InkWell(
-                    onTap: _onTap,
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(horizontal: 32),
-                      height: 80,
-                      child: Text(
-                        "Clips",
-                        style: AppTheme.subHeading.copyWith(color: Colors.black),
+                  SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, left: 16),
+                    child: IconButton(
+                      iconSize: 40,
+                      icon: Icon(Icons.close),
+                      color: Colors.white.withOpacity(0.9),
+                      onPressed: () {
+                        setState(() {
+                          _bottomSheetBottomPosition =
+                              widget._completeCollapsedBottomSheetBottomPosition;
+                        });
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Hero(
+                        tag: "image-${widget.character.name}",
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) => SpinKitPulse(
+                                color: Colors.white,
+                                size: 100.0,
+                              ),
+                              imageUrl: widget.character.imagePath,
+                              height: screenHeight * 0.45,
+                            ),
+                          ),
+                        )),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8),
+                    child: Hero(
+                        tag: "name-${widget.character.name}",
+                        child: Material(
+                            color: Colors.transparent,
+                            child: Container(
+                                child: Text(widget.character.name,
+                                    style: AppTheme.heading)))),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(32, 0, 8, 32),
+                    child:
+                        Text(widget.character.role, style: AppTheme.subHeading),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Ink(
+                            decoration: ShapeDecoration(
+                              color: Colors.deepOrange.shade200,
+                              shape: CircleBorder(),
+                            ),
+                            child: IconButton(
+                              icon: Icon(Icons.phone),
+                              iconSize: 46,
+                              color: Colors.white,
+                              onPressed: () =>
+                                  _service.call(widget.character.number),
+                            ),
+                          ),
+                          Ink(
+                            decoration: ShapeDecoration(
+                              color: Colors.deepOrange.shade200,
+                              shape: CircleBorder(),
+                            ),
+                            child: IconButton(
+                              icon: Icon(Icons.sms),
+                              iconSize: 46,
+                              color: Colors.white,
+                              onPressed: () =>
+                                  _service.sendSms(widget.character.number),
+                            ),
+                          ),
+                          Ink(
+                            decoration: ShapeDecoration(
+                              color: Colors.deepOrange.shade200,
+                              shape: CircleBorder(),
+                            ),
+                            child: IconButton(
+                              icon: Icon(Icons.email),
+                              iconSize: 46,
+                              color: Colors.white,
+                              onPressed: () =>
+                                  _service.sendEmail(widget.character.number),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: _clipsWidget(),
-                  ),
                 ],
               ),
-            ),
-          ),
-          */
-        ],
+            )
+            /*
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.decelerate,
+                bottom: _bottomSheetBottomPosition,
+                left: 0,
+                right: 0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      InkWell(
+                        onTap: _onTap,
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.symmetric(horizontal: 32),
+                          height: 80,
+                          child: Text(
+                            "Clips",
+                            style: AppTheme.subHeading.copyWith(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: _clipsWidget(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              */
+          ],
+        ),
       ),
     );
   }

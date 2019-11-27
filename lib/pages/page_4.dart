@@ -122,55 +122,48 @@ class _FourthPageState extends State<FourthPage> {
                       onLoading: _onLoading,
                       child: ListView(
                         children: <Widget>[
-                          Container(
-                            height: screenHeight * 0.85,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  height: screenHeight * 0.45,
-                                  child: PageView(
-                                    physics: ClampingScrollPhysics(),
-                                    controller: _pageController,
-                                    children: [
-                                      for (var i = 0;
-                                          i < characters.length;
-                                          i++)
-                                        CharacterWidget(
-                                            character: characters[i],
-                                            pageController: _pageController,
-                                            currentPage: i)
-                                    ],
-                                  ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                height: 350,
+                                child: PageView(
+                                  physics: ClampingScrollPhysics(),
+                                  controller: _pageController,
+                                  children: [
+                                    for (var i = 0; i < characters.length; i++)
+                                      CharacterWidget(
+                                          character: characters[i],
+                                          pageController: _pageController,
+                                          currentPage: i)
+                                  ],
                                 ),
-                                SizedBox(height: 20.0),
-                                Container(
-                                  height: screenHeight * 0.35,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(20.0),
-                                        child: Text(
-                                          aboutTitle,
-                                          style: AppTheme.displayBold,
-                                        ),
+                              ),
+                              SizedBox(height: 20.0),
+                              Container(
+                                height: 300,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Text(
+                                        aboutTitle,
+                                        style: AppTheme.displayBold,
                                       ),
-                                      Divider(),
-                                      Padding(
-                                        padding: const EdgeInsets.all(20.0),
-                                        child: Text(
-                                          about,
-                                          style:
-                                              AppTheme.articleDescriptionStyle,
-                                        ),
+                                    ),
+                                    Divider(),
+                                    Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Text(
+                                        about,
+                                        style: AppTheme.articleDescriptionStyle,
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

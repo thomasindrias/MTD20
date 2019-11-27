@@ -29,129 +29,136 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Hero(
-            tag: "background-${widget.character.name}",
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: widget.character.colors,
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
+      body: Dismissible(
+        direction: DismissDirection.down,
+        key: Key('key'),
+        onDismissed: (direction) {
+          Navigator.pop(context);
+        },
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Hero(
+              tag: "background-${widget.character.name}",
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: widget.character.colors,
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                  ),
                 ),
               ),
             ),
-          ),
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 40),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, left: 16),
-                  child: IconButton(
-                    iconSize: 40,
-                    icon: Icon(Icons.close),
-                    color: Colors.white.withOpacity(0.9),
-                    onPressed: () {
-                      setState(() {
-                        _bottomSheetBottomPosition =
-                            widget._completeCollapsedBottomSheetBottomPosition;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Hero(
-                      tag: "image-${widget.character.name}",
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                          child: CachedNetworkImage(
-                            placeholder: (context, url) => SpinKitPulse(
-                              color: Colors.white,
-                              size: 100.0,
-                            ),
-                            imageUrl: widget.character.image,
-                            height: screenHeight * 0.45,
-                          ),
-                        ),
-                      )),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8),
-                  child: Hero(
-                      tag: "name-${widget.character.name}",
-                      child: Material(
-                          color: Colors.transparent,
-                          child: Container(
-                              child: Text(widget.character.name,
-                                  style: AppTheme.heading)))),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 0, 8, 32),
-                  child: Linkify(
-                    onOpen: (link) async {
-                      if (await canLaunch(link.url)) {
-                        await launch(link.url);
-                      } else {
-                        throw 'Could not launch $link';
-                      }
-                    },
-                    text: widget.character.info,
-                    style: AppTheme.subHeading,
-                    linkStyle: TextStyle(color: Colors.blue),
-                    humanize: true,
-                  ),
-                ),
-              ],
-            ),
-          )
-          /*
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.decelerate,
-            bottom: _bottomSheetBottomPosition,
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40),
-                  topRight: Radius.circular(40),
-                ),
-              ),
+            SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  InkWell(
-                    onTap: _onTap,
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(horizontal: 32),
-                      height: 80,
-                      child: Text(
-                        "Clips",
-                        style: AppTheme.subHeading.copyWith(color: Colors.black),
-                      ),
+                  SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, left: 16),
+                    child: IconButton(
+                      iconSize: 40,
+                      icon: Icon(Icons.close),
+                      color: Colors.white.withOpacity(0.9),
+                      onPressed: () {
+                        setState(() {
+                          _bottomSheetBottomPosition = widget
+                              ._completeCollapsedBottomSheetBottomPosition;
+                        });
+                        Navigator.pop(context);
+                      },
                     ),
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: _clipsWidget(),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Hero(
+                        tag: "image-${widget.character.name}",
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) => SpinKitPulse(
+                                color: Colors.white,
+                                size: 100.0,
+                              ),
+                              imageUrl: widget.character.image,
+                              height: screenHeight * 0.45,
+                            ),
+                          ),
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 32.0, vertical: 8),
+                    child: Hero(
+                        tag: "name-${widget.character.name}",
+                        child: Material(
+                            color: Colors.transparent,
+                            child: Container(
+                                child: Text(widget.character.name,
+                                    style: AppTheme.heading)))),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(32, 0, 8, 32),
+                    child: Linkify(
+                      onOpen: (link) async {
+                        if (await canLaunch(link.url)) {
+                          await launch(link.url);
+                        } else {
+                          throw 'Could not launch $link';
+                        }
+                      },
+                      text: widget.character.info,
+                      style: AppTheme.subHeading,
+                      linkStyle: TextStyle(color: Colors.blue),
+                      humanize: true,
+                    ),
                   ),
                 ],
               ),
+            )
+            /*
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.decelerate,
+              bottom: _bottomSheetBottomPosition,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    InkWell(
+                      onTap: _onTap,
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        height: 80,
+                        child: Text(
+                          "Clips",
+                          style: AppTheme.subHeading.copyWith(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: _clipsWidget(),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-          */
-        ],
+            */
+          ],
+        ),
       ),
     );
   }
