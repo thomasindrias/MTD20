@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mtd20/pages/page_1.dart';
 import 'package:mtd20/pages/page_2.dart';
 import 'package:mtd20/pages/page_3.dart';
 import 'package:mtd20/pages/page_4.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-void main() { 
-  
+void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-    .then((_) {
-      runApp(MaterialApp(
+      .then((_) {
+    runApp(MaterialApp(
       title: "MTD20",
       home: HomePage(title: 'MTD20'),
       debugShowCheckedModeBanner: false,
     ));
-    });
-    }
+  });
+}
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -32,11 +33,11 @@ class _HomePageState extends State<HomePage> {
     keepPage: true,
   );
 
-
   @override
   void initState() {
     super.initState();
     currentIndex = 0;
+    initializeDateFormatting();
   }
 
   void changePage(int index) {
@@ -77,11 +78,11 @@ class _HomePageState extends State<HomePage> {
           BubbleBottomBarItem(
               backgroundColor: Colors.deepOrange.shade200,
               icon: Icon(
-                Icons.dashboard,
+                FontAwesomeIcons.newspaper,
                 color: Colors.black,
               ),
               activeIcon: Icon(
-                Icons.dashboard,
+                FontAwesomeIcons.newspaper,
                 color: Colors.red,
               ),
               title: Text("Hem")),

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:mtd20/animation/fade_in.dart';
 import 'package:mtd20/models/character.dart';
 import 'package:mtd20/pages/character_detail_screen.dart';
 import 'package:mtd20/styleguide.dart';
@@ -22,12 +23,8 @@ class CharacterWidget extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context,
-            PageRouteBuilder(
-                transitionDuration: const Duration(milliseconds: 350),
-                pageBuilder: (context, _, __) =>
-                    CharacterDetailScreen(character: character)));
+        Navigator.push(context,
+            FadeRoute(page: CharacterDetailScreen(character: character)));
       },
       child: AnimatedBuilder(
         animation: pageController,
@@ -88,6 +85,7 @@ class CharacterWidget extends StatelessWidget {
                       child: Material(
                         color: Colors.transparent,
                         child: Container(
+                          width: screenWidth * 0.75,
                           child: Text(
                             character.role,
                             style: AppTheme.heading,

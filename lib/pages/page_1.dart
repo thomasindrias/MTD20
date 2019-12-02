@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:mtd20/animation/slide_right.dart';
 import 'package:mtd20/models/article.dart';
 import 'package:mtd20/pages/article_detail_screen.dart';
 import 'package:mtd20/styleguide.dart';
@@ -18,6 +20,7 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage> {
   final Color bgColor = Color(0xffF3F3F3);
   final Color primaryColor = Color(0xffE70F0B);
+  DateFormat dateFormat;
 
   var url = "https://thomasindrias.github.io/mtd/data/articles.json";
 
@@ -27,16 +30,15 @@ class _FirstPageState extends State<FirstPage> {
       RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    await fetchData();
+
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
     // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    await fetchData(); // if failed,use loadFailed(),if no data return,use LoadNodata()
     if (mounted) setState(() {});
     _refreshController.loadComplete();
   }
@@ -45,6 +47,7 @@ class _FirstPageState extends State<FirstPage> {
   @override
   void initState() {
     super.initState();
+    dateFormat = new DateFormat("d MMM, HH:mm", "sv_SE");
     fetchData();
   }
 
@@ -130,9 +133,10 @@ class _FirstPageState extends State<FirstPage> {
         const SizedBox(height: 16.0),
         InkWell(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    ArticleDetailScreen(article: articles[0])));
+            Navigator.push(
+                context,
+                SlideRightRoute(
+                    page: ArticleDetailScreen(article: articles[0])));
           },
           child: Card(
             elevation: 4.0,
@@ -169,7 +173,7 @@ class _FirstPageState extends State<FirstPage> {
                       child: Row(
                         children: <Widget>[
                           Text(
-                            articles[0].time,
+                            dateFormat.format(DateTime.parse(articles[0].time)),
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize: 14.0,
@@ -207,15 +211,17 @@ class _FirstPageState extends State<FirstPage> {
             EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
         child: InkWell(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ArticleDetailScreen(article: article)));
+            Navigator.push(context,
+                SlideRightRoute(page: ArticleDetailScreen(article: article)));
           },
           child: ListTile(
             title: Text(
               article.title,
               style: AppTheme.articleTitleStyle,
             ),
-            subtitle: Text(article.time),
+            subtitle: Text(
+              dateFormat.format(DateTime.parse(article.time)),
+            ),
             trailing: Container(
               width: 80.0,
               decoration: BoxDecoration(

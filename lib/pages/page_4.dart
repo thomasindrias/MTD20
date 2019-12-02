@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:mtd20/models/character.dart';
-import 'package:http/http.dart' as http;
+import 'package:map_launcher/map_launcher.dart';
 import 'package:mtd20/widgets/character_widget.dart';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -46,8 +47,21 @@ class _FourthPageState extends State<FourthPage> {
   void initState() {
     super.initState();
     _pageController = PageController(
-        viewportFraction: 1.0, initialPage: currentPage, keepPage: false);
+        viewportFraction: 1.0,
+        initialPage: currentPage + characters.length,
+        keepPage: false);
+
+    scrollAnimation();
     //fetchData();
+  }
+
+  Future scrollAnimation() async {
+    try {
+      await Future.delayed(const Duration(seconds: 1), () {
+        _pageController.animateToPage(0,
+            curve: Curves.easeInOut, duration: Duration(seconds: 3));
+      });
+    } catch (e) {}
   }
 
   /*
@@ -60,11 +74,70 @@ class _FourthPageState extends State<FourthPage> {
     setState(() {});
   }
 */
+
+  openMapsSheet(context) async {
+    try {
+      final title = "Täppan";
+      final description = "Campus Norrköping";
+      final coords = Coords(58.590190, 16.176473);
+      final availableMaps = await MapLauncher.installedMaps;
+
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Container(
+                child: Wrap(
+                  children: <Widget>[
+                    for (var map in availableMaps)
+                      ListTile(
+                        onTap: () => map.showMarker(
+                          coords: coords,
+                          title: title,
+                          description: description,
+                        ),
+                        title: Text(map.mapName),
+                        leading: Image(
+                          image: map.icon,
+                          height: 30.0,
+                          width: 30.0,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: SizedBox(
+          height: 64,
+          width: 64,
+          child: FloatingActionButton(
+            onPressed: () {
+              openMapsSheet(context);
+            },
+            child: Icon(
+              FontAwesomeIcons.mapMarkerAlt,
+              size: 30,
+            ),
+            backgroundColor: Colors.orange,
+          ),
+        ),
+      ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(85),
         child: Container(

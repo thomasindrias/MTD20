@@ -31,6 +31,11 @@ dependencies:
   cached_network_image: ^1.1.1
   flutter_linkify: ^2.1.0
   flutter_spinkit: "^2.1.0"
+  add_2_calendar: ^1.3.1
+  intl: ^0.16.0
+  font_awesome_flutter: ^8.5.0
+  map_launcher: ^0.3.0
+
 
 dev_dependencies:
   flutter_test:

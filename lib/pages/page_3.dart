@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mtd20/animation/slide_right.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:mtd20/widgets/business_widget.dart';
 import 'package:mtd20/pages/business_detail_screen.dart';
@@ -31,15 +31,14 @@ class _ThirdPageState extends State<ThirdPage> {
       RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    await fetchData();
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
 
   void _onLoading() async {
     // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
+    await fetchData();
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     if (mounted) setState(() {});
     _refreshController.loadComplete();
@@ -51,7 +50,20 @@ class _ThirdPageState extends State<ThirdPage> {
     super.initState();
     fetchData();
     _pageController = PageController(
-        viewportFraction: 1.0, initialPage: currentPage, keepPage: false);
+      viewportFraction: 1.0,
+      initialPage: 5,
+      keepPage: false,
+    );
+    scrollAnimation();
+  }
+
+  Future scrollAnimation() async {
+    try {
+      await Future.delayed(const Duration(milliseconds: 500), () {
+        _pageController.animateToPage(0,
+            curve: Curves.easeInOut, duration: Duration(seconds: 1));
+      });
+    } catch (e) {}
   }
 
   fetchData() async {
@@ -189,9 +201,10 @@ class _ThirdPageState extends State<ThirdPage> {
             EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
         child: InkWell(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>
-                      CharacterDetailScreen(character: business)));
+              Navigator.push(
+                  context,
+                  SlideRightRoute(
+                      page: CharacterDetailScreen(character: business)));
             },
             child: Container(
                 decoration: BoxDecoration(

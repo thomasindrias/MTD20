@@ -43,8 +43,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
 
     return Scaffold(
       body: Dismissible(
-        movementDuration: Duration(milliseconds: 10),
-        direction: DismissDirection.vertical,
+        direction: DismissDirection.down,
         key: Key('key'),
         onDismissed: (direction) {
           Navigator.pop(context);
@@ -78,8 +77,8 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                       color: Colors.white.withOpacity(0.9),
                       onPressed: () {
                         setState(() {
-                          _bottomSheetBottomPosition =
-                              widget._completeCollapsedBottomSheetBottomPosition;
+                          _bottomSheetBottomPosition = widget
+                              ._completeCollapsedBottomSheetBottomPosition;
                         });
                         Navigator.pop(context);
                       },
@@ -104,8 +103,8 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                         )),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 32.0, vertical: 8),
                     child: Hero(
                         tag: "name-${widget.character.name}",
                         child: Material(

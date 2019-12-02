@@ -1,5 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:mtd20/models/article.dart';
 import 'package:mtd20/services/contact_service.dart';
 import 'package:mtd20/styleguide.dart';
@@ -22,6 +23,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
     with AfterLayoutMixin<ArticleDetailScreen> {
   double _bottomSheetBottomPosition = -330;
   bool isCollapsed = false;
+  DateFormat dateFormat;
 
   GetIt locator = GetIt();
 
@@ -32,6 +34,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
   @override
   void initState() {
     super.initState();
+    dateFormat = new DateFormat("d MMM, HH:mm", "sv_SE");
     setupLocator();
   }
 
@@ -41,120 +44,131 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
     final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
 
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          //Hero(tag: "background-${widget.article.title}"),
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0, left: 16),
-                  child: IconButton(
-                    iconSize: 40,
-                    icon: Icon(Icons.arrow_back),
-                    color: Colors.black.withOpacity(0.9),
-                    onPressed: () {
-                      setState(() {
-                        _bottomSheetBottomPosition =
-                            widget._completeCollapsedBottomSheetBottomPosition;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-                Stack(
-                  children: <Widget>[
-                    Container(
-                        height: 300,
-                        width: double.infinity,
-                        child: PNetworkImage(
-                          widget.article.imagePath,
-                          fit: BoxFit.cover,
-                        )),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16.0, right: 16.0, bottom: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(widget.article.time),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.share),
-                            onPressed: () {},
-                          )
-                        ],
-                      ),
-                      Text(
-                        widget.article.title,
-                        style: Theme.of(context).textTheme.title,
-                      ),
-                      Divider(),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Text(
-                        widget.article.description,
-                        textAlign: TextAlign.justify,
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )
-          /*
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.decelerate,
-            bottom: _bottomSheetBottomPosition,
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40),
-                  topRight: Radius.circular(40),
-                ),
-              ),
+      body: Dismissible(
+        direction: DismissDirection.down,
+        key: Key('key'),
+        onDismissed: (direction) {
+          Navigator.pop(context);
+        },
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            //Hero(tag: "background-${widget.article.title}"),
+            SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  InkWell(
-                    onTap: _onTap,
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(horizontal: 32),
-                      height: 80,
-                      child: Text(
-                        "Clips",
-                        style: AppTheme.subHeading.copyWith(color: Colors.black),
-                      ),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, left: 16),
+                    child: IconButton(
+                      iconSize: 40,
+                      icon: Icon(Icons.arrow_back),
+                      color: Colors.black.withOpacity(0.9),
+                      onPressed: () {
+                        setState(() {
+                          _bottomSheetBottomPosition = widget
+                              ._completeCollapsedBottomSheetBottomPosition;
+                        });
+                        Navigator.pop(context);
+                      },
                     ),
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: _clipsWidget(),
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                          height: 300,
+                          width: double.infinity,
+                          child: PNetworkImage(
+                            widget.article.imagePath,
+                            fit: BoxFit.cover,
+                          )),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16.0, right: 16.0, bottom: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                dateFormat.format(
+                                    DateTime.parse(widget.article.time)),
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.share),
+                              onPressed: () {},
+                            )
+                          ],
+                        ),
+                        Text(
+                          widget.article.title,
+                          style: Theme.of(context).textTheme.title,
+                        ),
+                        Divider(),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          widget.article.description,
+                          textAlign: TextAlign.justify,
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
+            )
+            /*
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.decelerate,
+              bottom: _bottomSheetBottomPosition,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    InkWell(
+                      onTap: _onTap,
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        height: 80,
+                        child: Text(
+                          "Clips",
+                          style: AppTheme.subHeading.copyWith(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: _clipsWidget(),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-          */
-        ],
+            */
+          ],
+        ),
       ),
     );
   }

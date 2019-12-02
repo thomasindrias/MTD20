@@ -9,14 +9,14 @@ Events eventsFromJson(String str) => Events.fromJson(json.decode(str));
 String eventsToJson(Events data) => json.encode(data.toJson());
 
 class Events {
-  List<Event> events;
+  List<mtdEvent> events;
 
   Events({
     this.events,
   });
 
   factory Events.fromJson(Map<String, dynamic> json) => Events(
-        events: List<Event>.from(json["events"].map((x) => Event.fromJson(x))),
+        events: List<mtdEvent>.from(json["events"].map((x) => mtdEvent.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -24,7 +24,7 @@ class Events {
       };
 }
 
-class Event {
+class mtdEvent {
   String title;
   String host;
   String time;
@@ -34,7 +34,7 @@ class Event {
   String image;
   String description;
 
-  Event({
+  mtdEvent({
     this.title,
     this.host,
     this.time,
@@ -45,7 +45,7 @@ class Event {
     this.description,
   });
 
-  factory Event.fromJson(Map<String, dynamic> json) => Event(
+  factory mtdEvent.fromJson(Map<String, dynamic> json) => mtdEvent(
         title: json["title"],
         host: json["host"],
         time: json["time"],
