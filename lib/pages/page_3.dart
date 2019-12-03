@@ -7,6 +7,7 @@ import 'package:mtd20/widgets/business_widget.dart';
 import 'package:mtd20/pages/business_detail_screen.dart';
 import 'package:mtd20/models/business.dart';
 import 'package:http/http.dart' as http;
+import 'package:page_transition/page_transition.dart';
 import 'dart:convert';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -50,8 +51,8 @@ class _ThirdPageState extends State<ThirdPage> {
     super.initState();
     fetchData();
     _pageController = PageController(
-      viewportFraction: 1.0,
-      initialPage: 5,
+      viewportFraction: 0.87,
+      initialPage: -5,
       keepPage: false,
     );
     scrollAnimation();
@@ -59,7 +60,7 @@ class _ThirdPageState extends State<ThirdPage> {
 
   Future scrollAnimation() async {
     try {
-      await Future.delayed(const Duration(milliseconds: 500), () {
+      await Future.delayed(const Duration(milliseconds: 0), () {
         _pageController.animateToPage(0,
             curve: Curves.easeInOut, duration: Duration(seconds: 1));
       });
@@ -203,8 +204,10 @@ class _ThirdPageState extends State<ThirdPage> {
             onTap: () {
               Navigator.push(
                   context,
-                  SlideRightRoute(
-                      page: CharacterDetailScreen(character: business)));
+                  PageTransition(
+                      type: PageTransitionType.scale,
+                      alignment: Alignment.bottomCenter,
+                      child: CharacterDetailScreen(character: business)));
             },
             child: Container(
                 decoration: BoxDecoration(

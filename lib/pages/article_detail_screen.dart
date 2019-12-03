@@ -95,15 +95,23 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
                         Row(
                           children: <Widget>[
                             Expanded(
-                              child: Text(
-                                dateFormat.format(
-                                    DateTime.parse(widget.article.time)),
-                                style: TextStyle(fontSize: 15),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Text(
+                                  dateFormat.format(
+                                      DateTime.parse(widget.article.time)),
+                                  style: TextStyle(fontSize: 15),
+                                ),
                               ),
                             ),
-                            IconButton(
-                              icon: Icon(Icons.share),
-                              onPressed: () {},
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                              child: IconButton(
+                                icon: Icon(Icons.share),
+                                onPressed: () {},
+                              ),
                             )
                           ],
                         ),
@@ -120,7 +128,9 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
                         ),
                         Text(
                           widget.article.description,
-                          textAlign: TextAlign.justify,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 16, height: 1.3, fontFamily: 'Lato'),
                         )
                       ],
                     ),

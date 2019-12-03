@@ -154,7 +154,10 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                             ? Text(
                                 widget.event.description,
                                 textAlign: TextAlign.justify,
-                                style: AppTheme.articleDescriptionStyle,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    height: 1.3,
+                                    fontFamily: 'Lato'),
                               )
                             : Text("")
                       ],

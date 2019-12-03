@@ -35,6 +35,7 @@ dependencies:
   intl: ^0.16.0
   font_awesome_flutter: ^8.5.0
   map_launcher: ^0.3.0
+  page_transition: ^1.1.5
 
 
 dev_dependencies:
@@ -86,6 +87,11 @@ flutter:
           weight: 600
         - asset: assets/fonts/WorkSans-Bold.ttf
           weight: 700
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf
+        - asset: assets/fonts/Lato-Bold.ttf
+          weight: 500
     - family: Icon
       fonts:
         - asset: assets/fonts/Icon.ttf
