@@ -47,11 +47,9 @@ class _FourthPageState extends State<FourthPage> {
   void initState() {
     super.initState();
     _pageController = PageController(
-        viewportFraction: 1.0,
-        initialPage: currentPage + characters.length,
-        keepPage: false);
+        viewportFraction: 0.87, initialPage: -5, keepPage: false);
 
-    scrollAnimation();
+    //scrollAnimation();
     //fetchData();
   }
 
@@ -201,7 +199,7 @@ class _FourthPageState extends State<FourthPage> {
                               Container(
                                 height: 350,
                                 child: PageView(
-                                  physics: ClampingScrollPhysics(),
+                                  //physics: ClampingScrollPhysics(),
                                   controller: _pageController,
                                   children: [
                                     for (var i = 0; i < characters.length; i++)

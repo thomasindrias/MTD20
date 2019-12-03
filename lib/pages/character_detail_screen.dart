@@ -163,7 +163,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                               iconSize: 46,
                               color: Colors.white,
                               onPressed: () =>
-                                  _service.sendEmail(widget.character.number),
+                                  _service.sendEmail(widget.character.email),
                             ),
                           )
                         ],

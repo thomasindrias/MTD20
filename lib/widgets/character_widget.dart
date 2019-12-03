@@ -75,7 +75,7 @@ class CharacterWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 60, right: 16, bottom: 16),
+                padding: const EdgeInsets.only(left: 34, right: 16, bottom: 18),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,

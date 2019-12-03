@@ -36,6 +36,7 @@ dependencies:
   font_awesome_flutter: ^8.5.0
   map_launcher: ^0.3.0
   page_transition: ^1.1.5
+  permission_handler: '^4.0.0'
 
 
 dev_dependencies:

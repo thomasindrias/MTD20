@@ -9,10 +9,18 @@
 		<string>iosamap</string>
 		<string>waze</string>
 	</array>
+
 	<key>NSCalendarsUsageDescription</key>
 	<string>Add events to calendar.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>INSERT_REASON_HERE</string>
+
+    <!-- Permission options for the `contacts` group -->
+    <key>NSContactsUsageDescription</key>
+    <string>contacts</string>
+
+	<!-- Permission options for the `reminder` group -->
+    <key>NSRemindersUsageDescription</key>
+    <string>reminders</string>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

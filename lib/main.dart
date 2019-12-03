@@ -7,6 +7,7 @@ import 'package:mtd20/pages/page_2.dart';
 import 'package:mtd20/pages/page_3.dart';
 import 'package:mtd20/pages/page_4.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
@@ -38,6 +39,13 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     currentIndex = 0;
     initializeDateFormatting();
+    permissionHandler();
+  }
+
+  void permissionHandler() async {
+    Map<PermissionGroup, PermissionStatus> permissions =
+        await PermissionHandler()
+            .requestPermissions([PermissionGroup.contacts]);
   }
 
   void changePage(int index) {
@@ -82,43 +90,43 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.black,
               ),
               activeIcon: Icon(
-                FontAwesomeIcons.newspaper,
+                FontAwesomeIcons.solidNewspaper,
                 color: Colors.red,
               ),
               title: Text("Hem")),
           BubbleBottomBarItem(
               backgroundColor: Colors.deepOrange.shade200,
               icon: Icon(
-                Icons.calendar_today,
+                FontAwesomeIcons.calendar,
                 color: Colors.black,
               ),
               activeIcon: Icon(
-                Icons.calendar_today,
+                FontAwesomeIcons.solidCalendar,
                 color: Colors.red,
               ),
               title: Text("Schema")),
           BubbleBottomBarItem(
               backgroundColor: Colors.deepOrange.shade200,
               icon: Icon(
-                Icons.business,
+                FontAwesomeIcons.building,
                 color: Colors.black,
               ),
               activeIcon: Icon(
-                Icons.business,
+                FontAwesomeIcons.solidBuilding,
                 color: Colors.red,
               ),
               title: Text("Företag")),
           BubbleBottomBarItem(
               backgroundColor: Colors.deepOrange.shade200,
               icon: Icon(
-                Icons.info,
+                FontAwesomeIcons.infoCircle,
                 color: Colors.black,
               ),
               activeIcon: Icon(
-                Icons.info,
+                FontAwesomeIcons.infoCircle,
                 color: Colors.red,
               ),
-              title: Text("Kontakt"))
+              title: Text("Om"))
         ],
       ),
     );

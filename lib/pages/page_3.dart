@@ -139,7 +139,7 @@ class _ThirdPageState extends State<ThirdPage> {
                         Container(
                           height: 400,
                           child: PageView(
-                            physics: ClampingScrollPhysics(),
+                            //physics: ClampingScrollPhysics(),
                             controller: _pageController,
                             children: [
                               for (var i = 0; i < 2; i++)

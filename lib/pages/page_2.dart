@@ -8,6 +8,7 @@ import 'package:mtd20/pages/event_detail_screen.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SecondPage extends StatefulWidget {
@@ -132,8 +133,12 @@ class _SecondPageState extends State<SecondPage> {
         const SizedBox(height: 16.0),
         InkWell(
           onTap: () {
-            Navigator.push(context,
-                SlideRightRoute(page: EventDetailScreen(event: events[0])));
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: EventDetailScreen(event: events[0]),
+                    curve: Curves.elasticInOut));
           },
           child: Card(
             elevation: 4.0,
@@ -206,8 +211,12 @@ class _SecondPageState extends State<SecondPage> {
             EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
         child: InkWell(
           onTap: () {
-            Navigator.push(context,
-                SlideRightRoute(page: EventDetailScreen(event: event)));
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: EventDetailScreen(event: event),
+                    curve: Curves.elasticInOut));
           },
           child: ListTile(
             title: Text(

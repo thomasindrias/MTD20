@@ -25,7 +25,7 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_leader.png",
       role: "Projektledare",
       email: "philip.ngo@medieteknikdagarna.se",
-      number: "+46 725 799 874",
+      number: "+46725799874",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
       name: "Iris Kotsinas",
@@ -33,7 +33,7 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_kassor.png",
       role: "Kassör",
       email: "iris.kotsinas@medieteknikdagarna.se",
-      number: "+46 735 108 508",
+      number: "+46735108508",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
       name: "Emma Segolsson",
@@ -41,7 +41,7 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_foretag.png",
       role: "Bankettansvarig",
       email: "emma.segolsson@medieteknikdagarna.se",
-      number: "+46 703 540 555",
+      number: "+46703540555",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
       name: "Simon Brefält",
@@ -49,7 +49,7 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_massa.png",
       role: "Mässansvarig",
       email: "simon.brefält@medieteknikdagarna.se",
-      number: "+46 723 510 683",
+      number: "+46723510683",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
       name: "August Kroon",
@@ -57,7 +57,7 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_assistent.png",
       role: "Projektassistent",
       email: "august.kroon@medieteknikdagarna.se",
-      number: "+46 738 200 077",
+      number: "+46738200077",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
       name: "Marcus Gladh",
@@ -65,7 +65,7 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_forelasning.png",
       role: "Föreläsningsansvarig",
       email: "marcus.gladh@medieteknikdagarna.se",
-      number: "+46 704 216 246",
+      number: "+46704216246",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
       name: "Ebba Nilsson",
@@ -73,7 +73,7 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_bankett.png",
       role: "Bankettansvarig",
       email: "ebba.nilsson@medieteknikdagarna.se",
-      number: "+46 707 739 902",
+      number: "+46707739902",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
       name: "Max Skanvik",
@@ -81,7 +81,7 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_teknik.png",
       role: "Teknikansvarig",
       email: "max.skanvik@medieteknikdagarna.se",
-      number: "+46 703 101 620",
+      number: "+46703101620",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
       name: "William Uddmyr",
@@ -89,7 +89,7 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_pr.png",
       role: "PR-ansvarig",
       email: "william.uddmyr@medieteknikdagarna.se",
-      number: "+46 760 165 455",
+      number: "+46760165455",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
       name: "Isak Engström",
@@ -97,7 +97,7 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_koordinator.png",
       role: "Koordinator",
       email: "isak.engstrom@medieteknikdagarna.se",
-      number: "+46 761 358 900",
+      number: "+46761358900",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
       name: "Victor Lindquist",
@@ -105,7 +105,7 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_webb.png",
       role: "Webbansvarig",
       email: "victor.lindquist@medieteknikdagarna.se",
-      number: "+46 707 755 138",
+      number: "+46707755138",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
       name: "Henrik Rosander",
@@ -113,7 +113,7 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_tryck.png",
       role: "Tryckansvarig",
       email: "henrik.rosander@medieteknikdagarna.se",
-      number: "+46 760 637 811",
+      number: "+46760637811",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
   Character(
       name: "Thomas Indrias",
@@ -121,6 +121,6 @@ List characters = [
           "https://thomasindrias.github.io/mtd/assets/images/profile_app.png",
       role: "Appansvarig",
       email: "thomas.indrias@medieteknikdagarna.se",
-      number: "+46 739 882 609",
+      number: "+46739882609",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
 ];
