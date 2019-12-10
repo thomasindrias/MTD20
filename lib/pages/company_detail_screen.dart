@@ -137,6 +137,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                             Padding(
                                 padding: EdgeInsets.fromLTRB(0, 0, 8.0, 0),
                                 child: FilterChip(
+                                  elevation: 2.0,
                                   backgroundColor:
                                       Colors.white.withOpacity(0.8),
                                   labelPadding:
