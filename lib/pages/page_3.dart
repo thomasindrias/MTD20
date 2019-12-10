@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mtd20/animation/slide_right.dart';
+import 'package:mtd20/models/companies.dart';
 import 'package:mtd20/styleguide.dart';
-import 'package:mtd20/widgets/business_widget.dart';
-import 'package:mtd20/pages/business_detail_screen.dart';
-import 'package:mtd20/models/business.dart';
+import 'package:mtd20/widgets/company_widget.dart';
+import 'package:mtd20/pages/company_detail_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'dart:convert';
@@ -18,9 +17,9 @@ class ThirdPage extends StatefulWidget {
 }
 
 class _ThirdPageState extends State<ThirdPage> {
-  var url = "https://aneromz.github.io/utstallare.json";
+  var url = "https://thomasindrias.github.io/mtd/data/companies.json";
 
-  Business business;
+  Companies companies;
 
   static const _kFontFam = 'Icon';
   static const IconData gem_regular =
@@ -71,7 +70,7 @@ class _ThirdPageState extends State<ThirdPage> {
     var res = await http.get(url);
     var decodedJson = jsonDecode(res.body);
 
-    business = Business.fromJson(decodedJson);
+    companies = Companies.fromJson(decodedJson);
 
     setState(() {});
   }
@@ -112,7 +111,7 @@ class _ThirdPageState extends State<ThirdPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
-              child: business == null
+              child: companies == null
                   ? Center(child: CircularProgressIndicator())
                   : SmartRefresher(
                       enablePullDown: true,
@@ -142,9 +141,9 @@ class _ThirdPageState extends State<ThirdPage> {
                             //physics: ClampingScrollPhysics(),
                             controller: _pageController,
                             children: [
-                              for (var i = 0; i < 2; i++)
+                              for (var i = 0; i < companies.gold.length; i++)
                                 CharacterWidget(
-                                    character: business.samarbetspartners[i],
+                                    company: companies.gold[i],
                                     pageController: _pageController,
                                     currentPage: i)
                             ],
@@ -163,7 +162,7 @@ class _ThirdPageState extends State<ThirdPage> {
                             scrollDirection: Axis.horizontal,
                             physics: ScrollPhysics(),
                             primary: false,
-                            children: business.both
+                            children: companies.silver
                                 .map((foretag) => Container(
                                     width: 180, child: _buildCard(foretag)))
                                 .toList(),
@@ -182,7 +181,7 @@ class _ThirdPageState extends State<ThirdPage> {
                             scrollDirection: Axis.horizontal,
                             physics: ScrollPhysics(),
                             primary: false,
-                            children: business.onsdag
+                            children: companies.brons
                                 .map((foretag) => Container(
                                     width: 180, child: _buildCard(foretag)))
                                 .toList(),
@@ -196,7 +195,7 @@ class _ThirdPageState extends State<ThirdPage> {
     );
   }
 
-  Widget _buildCard(Both business) {
+  Widget _buildCard(Bron company) {
     return Padding(
         padding:
             EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
@@ -207,7 +206,7 @@ class _ThirdPageState extends State<ThirdPage> {
                   PageTransition(
                       type: PageTransitionType.scale,
                       alignment: Alignment.bottomCenter,
-                      child: CharacterDetailScreen(character: business)));
+                      child: CharacterDetailScreen(company: company)));
             },
             child: Container(
                 decoration: BoxDecoration(
@@ -223,14 +222,14 @@ class _ThirdPageState extends State<ThirdPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Hero(
-                        tag: business.image,
+                        tag: company.logo,
                         child: Container(
                             height: 100.0,
                             width: 100.0,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: CachedNetworkImageProvider(
-                                      business.image,
+                                      company.logo,
                                     ),
                                     fit: BoxFit.contain)))),
                   ),
@@ -239,7 +238,7 @@ class _ThirdPageState extends State<ThirdPage> {
                   ),
                   Center(
                     child: Text(
-                      business.name,
+                      company.name,
                       style:
                           TextStyle(color: Color(0xFF575E67), fontSize: 20.0),
                       textAlign: TextAlign.center,

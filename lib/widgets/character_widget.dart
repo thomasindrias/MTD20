@@ -4,7 +4,6 @@ import 'package:mtd20/models/character.dart';
 import 'package:mtd20/pages/character_detail_screen.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CharacterWidget extends StatelessWidget {

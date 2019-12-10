@@ -1,18 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:mtd20/models/business.dart';
-import 'package:mtd20/pages/business_detail_screen.dart';
+import 'package:mtd20/models/companies.dart';
+import 'package:mtd20/pages/company_detail_screen.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class CharacterWidget extends StatelessWidget {
-  final Both character;
+  final Bron company;
   final PageController pageController;
   final int currentPage;
 
   const CharacterWidget(
-      {Key key, this.character, this.pageController, this.currentPage})
+      {Key key, this.company, this.pageController, this.currentPage})
       : super(key: key);
 
   @override
@@ -27,7 +26,7 @@ class CharacterWidget extends StatelessWidget {
             PageRouteBuilder(
                 transitionDuration: const Duration(milliseconds: 350),
                 pageBuilder: (context, _, __) =>
-                    CharacterDetailScreen(character: character)));
+                    CharacterDetailScreen(company: company)));
       },
       child: AnimatedBuilder(
         animation: pageController,
@@ -45,13 +44,16 @@ class CharacterWidget extends StatelessWidget {
                 child: ClipPath(
                   clipper: CharacterCardBackgroundClipper(),
                   child: Hero(
-                    tag: "background-${character.name}",
+                    tag: "background-${company.name}",
                     child: Container(
                       height: 0.5 * screenHeight,
                       width: 0.8 * screenWidth,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: character.colors,
+                          colors: [
+                            Colors.orange.shade200,
+                            Colors.deepOrange.shade400
+                          ],
                           begin: Alignment.topRight,
                           end: Alignment.bottomLeft,
                         ),
@@ -63,7 +65,7 @@ class CharacterWidget extends StatelessWidget {
               Align(
                 alignment: Alignment(0, -0.4),
                 child: Hero(
-                  tag: "image-${character.name}",
+                  tag: "image-${company.name}",
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CachedNetworkImage(
@@ -71,7 +73,7 @@ class CharacterWidget extends StatelessWidget {
                         color: Colors.white,
                         size: 100.0,
                       ),
-                      imageUrl: character.image,
+                      imageUrl: company.logo,
                       height: screenHeight * 0.38 * value,
                     ),
                   ),
@@ -84,12 +86,12 @@ class CharacterWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Hero(
-                      tag: "name-${character.name}",
+                      tag: "name-${company.name}",
                       child: Material(
                         color: Colors.transparent,
                         child: Container(
                           child: Text(
-                            character.name,
+                            company.name,
                             style: AppTheme.heading,
                           ),
                         ),

@@ -2,25 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>comgooglemaps</string>
-		<string>baidumap</string>
-		<string>iosamap</string>
-		<string>waze</string>
-	</array>
-
-	<key>NSCalendarsUsageDescription</key>
-	<string>Add events to calendar.</string>
-
-    <!-- Permission options for the `contacts` group -->
-    <key>NSContactsUsageDescription</key>
-    <string>contacts</string>
-
-	<!-- Permission options for the `reminder` group -->
-    <key>NSRemindersUsageDescription</key>
-    <string>reminders</string>
-
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Needs location when in use.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Always and when in use.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Motion</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speech Recognition</string>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>Music</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -39,17 +30,30 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>comgooglemaps</string>
+		<string>baidumap</string>
+		<string>iosamap</string>
+		<string>waze</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Add events into your calendar.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Feature to call or message the MTD team.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Set reminders.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

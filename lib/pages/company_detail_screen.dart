@@ -1,19 +1,19 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:mtd20/models/business.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mtd20/models/companies.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CharacterDetailScreen extends StatefulWidget {
   // final double _expandedBottomSheetBottomPosition = 0;
   final double _collapsedBottomSheetBottomPosition = -250;
   final double _completeCollapsedBottomSheetBottomPosition = -330;
-  final Both character;
+  final Bron company;
 
-  const CharacterDetailScreen({Key key, this.character}) : super(key: key);
+  const CharacterDetailScreen({Key key, this.company}) : super(key: key);
 
   @override
   _CharacterDetailScreenState createState() => _CharacterDetailScreenState();
@@ -23,6 +23,15 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
     with AfterLayoutMixin<CharacterDetailScreen> {
   double _bottomSheetBottomPosition = -330;
   bool isCollapsed = false;
+
+  _launchURL() async {
+    String url = widget.company.website;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +48,14 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
           fit: StackFit.expand,
           children: <Widget>[
             Hero(
-              tag: "background-${widget.character.name}",
+              tag: "background-${widget.company.name}",
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: widget.character.colors,
+                    colors: [
+                      Colors.orange.shade200,
+                      Colors.deepOrange.shade400
+                    ],
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
                   ),
@@ -74,7 +86,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                   Align(
                     alignment: Alignment.topRight,
                     child: Hero(
-                        tag: "image-${widget.character.name}",
+                        tag: "image-${widget.company.name}",
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
@@ -83,7 +95,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                                 color: Colors.white,
                                 size: 100.0,
                               ),
-                              imageUrl: widget.character.image,
+                              imageUrl: widget.company.logo,
                               height: screenHeight * 0.45,
                             ),
                           ),
@@ -93,119 +105,68 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                     padding: const EdgeInsets.symmetric(
                         horizontal: 32.0, vertical: 8),
                     child: Hero(
-                        tag: "name-${widget.character.name}",
+                        tag: "name-${widget.company.name}",
                         child: Material(
                             color: Colors.transparent,
-                            child: Container(
-                                child: Text(widget.character.name,
-                                    style: AppTheme.heading)))),
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                    child: Text(widget.company.name,
+                                        style: AppTheme.heading)),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(8.0, 0, 0, 0),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      FontAwesomeIcons.externalLinkAlt,
+                                      color: Colors.white70,
+                                      size: 26,
+                                    ),
+                                    onPressed: _launchURL,
+                                    splashColor: Colors.transparent,
+                                  ),
+                                ),
+                              ],
+                            ))),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(32, 0, 8, 32),
-                    child: Linkify(
-                      onOpen: (link) async {
-                        if (await canLaunch(link.url)) {
-                          await launch(link.url);
-                        } else {
-                          throw 'Could not launch $link';
-                        }
-                      },
-                      text: widget.character.info,
+                      padding: const EdgeInsets.fromLTRB(32, 0, 8, 10),
+                      child: Row(
+                        children: <Widget>[
+                          for (var i = 0; i < widget.company.offer.length; i++)
+                            Padding(
+                                padding: EdgeInsets.fromLTRB(0, 0, 8.0, 0),
+                                child: FilterChip(
+                                  backgroundColor:
+                                      Colors.white.withOpacity(0.8),
+                                  labelPadding:
+                                      EdgeInsets.symmetric(horizontal: 10.0),
+                                  label: Text(
+                                    widget.company.offer[i],
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        height: 1.3,
+                                        fontFamily: 'Lato'),
+                                  ),
+                                  onSelected: (b) {},
+                                ))
+                        ],
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(32, 0, 8, 20),
+                    child: Text(
+                      widget.company.info,
                       style: AppTheme.subHeading,
-                      linkStyle: TextStyle(color: Colors.blue),
-                      humanize: true,
                     ),
                   ),
                 ],
               ),
             )
-            /*
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.decelerate,
-              bottom: _bottomSheetBottomPosition,
-              left: 0,
-              right: 0,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    InkWell(
-                      onTap: _onTap,
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.symmetric(horizontal: 32),
-                        height: 80,
-                        child: Text(
-                          "Clips",
-                          style: AppTheme.subHeading.copyWith(color: Colors.black),
-                        ),
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: _clipsWidget(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            */
           ],
         ),
       ),
     );
   }
-/*
-  Widget _clipsWidget() {
-    return Container(
-      height: 250,
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              roundedContainer(Colors.redAccent),
-              SizedBox(height: 20),
-              roundedContainer(Colors.greenAccent),
-            ],
-          ),
-          SizedBox(width: 16),
-          Column(
-            children: <Widget>[
-              roundedContainer(Colors.orangeAccent),
-              SizedBox(height: 20),
-              roundedContainer(Colors.purple),
-            ],
-          ),
-          SizedBox(width: 16),
-          Column(
-            children: <Widget>[
-              roundedContainer(Colors.grey),
-              SizedBox(height: 20),
-              roundedContainer(Colors.blueGrey),
-            ],
-          ),
-          SizedBox(width: 16),
-          Column(
-            children: <Widget>[
-              roundedContainer(Colors.lightGreenAccent),
-              SizedBox(height: 20),
-              roundedContainer(Colors.pinkAccent),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-  */
 
   Widget roundedContainer(Color color) {
     return Container(
@@ -217,17 +178,6 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
       ),
     );
   }
-
-/*
-  _onTap() {
-    setState(() {
-      _bottomSheetBottomPosition = isCollapsed
-          ? widget._expandedBottomSheetBottomPosition
-          : widget._collapsedBottomSheetBottomPosition;
-      isCollapsed = !isCollapsed;
-    });
-  }
-*/
 
   @override
   void afterFirstLayout(BuildContext context) {

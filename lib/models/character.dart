@@ -39,7 +39,7 @@ List characters = [
       name: "Emma Segolsson",
       imagePath:
           "https://thomasindrias.github.io/mtd/assets/images/profile_foretag.png",
-      role: "Bankettansvarig",
+      role: "Företagsansvarig",
       email: "emma.segolsson@medieteknikdagarna.se",
       number: "+46703540555",
       colors: [Colors.orange.shade200, Colors.deepOrange.shade400]),
