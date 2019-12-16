@@ -110,14 +110,6 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
                                   style: TextStyle(fontSize: 15),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: IconButton(
-                                icon: Icon(Icons.share),
-                                onPressed: () {},
-                              ),
                             )
                           ],
                         ),
