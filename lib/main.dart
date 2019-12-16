@@ -19,7 +19,7 @@ void main() {
       .then((_) {
     runApp(MaterialApp(
       title: "MTD20",
-      home: IntroScreen(),
+      home: Router(),
       routes: <String, WidgetBuilder>{
         // Set routes for using the Navigator.
         '/intro': (BuildContext context) => new IntroScreen(),
@@ -63,7 +63,7 @@ class _RouterState extends State<Router> {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new Center(
-        child: new Text('Loading...'),
+        child: new Text('Laddar...'),
       ),
     );
   }
