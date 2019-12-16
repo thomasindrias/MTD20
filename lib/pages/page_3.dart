@@ -135,6 +135,10 @@ class _ThirdPageState extends State<ThirdPage> {
                       onLoading: _onLoading,
                       child: ListView(shrinkWrap: true, children: <Widget>[
                         SizedBox(height: 20),
+                        Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child: Text("Guldpartners", style: AppTheme.display3),
+                        ),
                         Container(
                           height: 400,
                           child: PageView(

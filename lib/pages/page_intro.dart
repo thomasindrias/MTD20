@@ -115,7 +115,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   ),
                   margin: EdgeInsets.only(top: 20.0),
                 ),
-                SizedBox(height: 150),
+                SizedBox(height: 130),
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Image.asset(
