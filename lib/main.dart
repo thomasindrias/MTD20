@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +9,9 @@ import 'package:mtd20/pages/page_2.dart';
 import 'package:mtd20/pages/page_3.dart';
 import 'package:mtd20/pages/page_4.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:mtd20/pages/page_intro.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,10 +19,54 @@ void main() {
       .then((_) {
     runApp(MaterialApp(
       title: "MTD20",
-      home: HomePage(title: 'MTD20'),
+      home: IntroScreen(),
+      routes: <String, WidgetBuilder>{
+        // Set routes for using the Navigator.
+        '/intro': (BuildContext context) => new IntroScreen(),
+        '/home': (BuildContext context) => new HomePage()
+      },
       debugShowCheckedModeBanner: false,
     ));
   });
+}
+
+class Router extends StatefulWidget {
+  Router({Key key}) : super(key: key);
+
+  @override
+  _RouterState createState() => _RouterState();
+}
+
+class _RouterState extends State<Router> {
+  Future checkFirstSeen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _seen = (prefs.getBool('seen') ?? false);
+    print(_seen);
+
+    if (_seen) {
+      Navigator.of(context).pushReplacementNamed('/home');
+    } else {
+      prefs.setBool('seen', true);
+      Navigator.of(context).pushReplacementNamed('/intro');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    new Timer(new Duration(milliseconds: 200), () {
+      checkFirstSeen();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      body: new Center(
+        child: new Text('Loading...'),
+      ),
+    );
+  }
 }
 
 class HomePage extends StatefulWidget {

@@ -7,6 +7,7 @@ import 'package:mtd20/services/contact_service.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:flutter/material.dart';
 import 'package:mtd20/models/network_image.dart';
+import 'package:pos_pinch_zoom_image/pos_pinch_zoom_image.dart';
 
 class EventDetailScreen extends StatefulWidget {
   // final double _expandedBottomSheetBottomPosition = 0;
@@ -116,9 +117,15 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                       Container(
                           height: 300,
                           width: double.infinity,
-                          child: PNetworkImage(
-                            widget.event.image,
-                            fit: BoxFit.cover,
+                          child: PinchZoomImage(
+                            image: PNetworkImage(
+                              widget.event.image,
+                              height: 300,
+                              fit: BoxFit.cover,
+                            ),
+                            zoomedBackgroundColor:
+                                Color.fromRGBO(240, 240, 240, 1.0),
+                            hideStatusBarWhileZooming: true,
                           )),
                     ],
                   ),

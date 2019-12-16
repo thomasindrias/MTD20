@@ -168,7 +168,7 @@ class _ThirdPageState extends State<ThirdPage> {
                                 .toList(),
                           ),
                         ),
-                        SizedBox(height: 40),
+                        SizedBox(height: 30),
                         Padding(
                           padding: EdgeInsets.only(left: 15),
                           child:
@@ -182,6 +182,24 @@ class _ThirdPageState extends State<ThirdPage> {
                             physics: ScrollPhysics(),
                             primary: false,
                             children: companies.brons
+                                .map((foretag) => Container(
+                                    width: 180, child: _buildCard(foretag)))
+                                .toList(),
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child: Text("Andra", style: AppTheme.display3),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                          height: 200,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            physics: ScrollPhysics(),
+                            primary: false,
+                            children: companies.other
                                 .map((foretag) => Container(
                                     width: 180, child: _buildCard(foretag)))
                                 .toList(),
@@ -234,14 +252,13 @@ class _ThirdPageState extends State<ThirdPage> {
                                     fit: BoxFit.contain)))),
                   ),
                   Expanded(
-                    child: Container(),
-                  ),
-                  Center(
-                    child: Text(
-                      company.name,
-                      style:
-                          TextStyle(color: Color(0xFF575E67), fontSize: 20.0),
-                      textAlign: TextAlign.center,
+                    child: Center(
+                      child: Text(
+                        company.name,
+                        style:
+                            TextStyle(color: Color(0xFF575E67), fontSize: 20.0),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                   Padding(

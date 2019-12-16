@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mtd20/models/article.dart';
 import 'package:mtd20/services/contact_service.dart';
-import 'package:mtd20/styleguide.dart';
+import 'package:pos_pinch_zoom_image/pos_pinch_zoom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mtd20/models/network_image.dart';
 
@@ -61,7 +61,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
                 children: <Widget>[
                   SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10.0, left: 16),
+                    padding: const EdgeInsets.only(top: 25.0, left: 16),
                     child: IconButton(
                       iconSize: 40,
                       icon: Icon(Icons.arrow_back),
@@ -80,9 +80,15 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
                       Container(
                           height: 300,
                           width: double.infinity,
-                          child: PNetworkImage(
-                            widget.article.imagePath,
-                            fit: BoxFit.cover,
+                          child: PinchZoomImage(
+                            image: PNetworkImage(
+                              widget.article.imagePath,
+                              height: 300,
+                              fit: BoxFit.cover,
+                            ),
+                            zoomedBackgroundColor:
+                                Color.fromRGBO(240, 240, 240, 1.0),
+                            hideStatusBarWhileZooming: true,
                           )),
                     ],
                   ),

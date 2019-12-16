@@ -122,8 +122,8 @@ class _FourthPageState extends State<FourthPage> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(10.0),
         child: SizedBox(
-          height: 64,
-          width: 64,
+          height: 58,
+          width: 58,
           child: FloatingActionButton(
             onPressed: () {
               openMapsSheet(context);
@@ -224,13 +224,17 @@ class _FourthPageState extends State<FourthPage> {
                                       ),
                                     ),
                                     Divider(),
-                                    Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Text(
-                                        about,
-                                        style: AppTheme.articleDescriptionStyle,
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 18.0),
+                                        child: Text(
+                                          about,
+                                          style:
+                                              AppTheme.articleDescriptionStyle,
+                                        ),
                                       ),
-                                    ),
+                                    )
                                   ],
                                 ),
                               ),

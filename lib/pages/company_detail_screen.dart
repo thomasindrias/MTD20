@@ -6,6 +6,7 @@ import 'package:mtd20/models/companies.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:pos_pinch_zoom_image/pos_pinch_zoom_image.dart';
 
 class CharacterDetailScreen extends StatefulWidget {
   // final double _expandedBottomSheetBottomPosition = 0;
@@ -90,13 +91,18 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
-                            child: CachedNetworkImage(
-                              placeholder: (context, url) => SpinKitPulse(
-                                color: Colors.white,
-                                size: 100.0,
+                            child: PinchZoomImage(
+                              image: CachedNetworkImage(
+                                placeholder: (context, url) => SpinKitPulse(
+                                  color: Colors.white,
+                                  size: 100.0,
+                                ),
+                                imageUrl: widget.company.logo,
+                                height: screenHeight * 0.45,
                               ),
-                              imageUrl: widget.company.logo,
-                              height: screenHeight * 0.45,
+                              zoomedBackgroundColor:
+                                  Color.fromRGBO(240, 240, 240, 1.0),
+                              hideStatusBarWhileZooming: true,
                             ),
                           ),
                         )),
@@ -110,28 +116,25 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                             color: Colors.transparent,
                             child: Row(
                               children: <Widget>[
-                                Container(
-                                    child: Text(widget.company.name,
-                                        style: AppTheme.heading)),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(8.0, 0, 0, 0),
-                                  child: IconButton(
-                                    icon: Icon(
-                                      FontAwesomeIcons.externalLinkAlt,
-                                      color: Colors.white70,
-                                      size: 26,
-                                    ),
-                                    onPressed: _launchURL,
-                                    splashColor: Colors.transparent,
+                                Expanded(
+                                  child: Text(widget.company.name,
+                                      style: AppTheme.heading),
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    FontAwesomeIcons.externalLinkAlt,
+                                    color: Colors.white70,
+                                    size: 26,
                                   ),
+                                  onPressed: _launchURL,
+                                  splashColor: Colors.transparent,
                                 ),
                               ],
                             ))),
                   ),
                   Padding(
                       padding: const EdgeInsets.fromLTRB(32, 0, 8, 10),
-                      child: Row(
+                      child: Wrap(
                         children: <Widget>[
                           for (var i = 0; i < widget.company.offer.length; i++)
                             Padding(
