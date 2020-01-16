@@ -37,7 +37,7 @@ class _EventDetailScreenState extends State<EventDetailScreen>
   @override
   void initState() {
     super.initState();
-    dateFormat = new DateFormat("d MMM, HH:mm", "sv_SE");
+    dateFormat = new DateFormat("d MMM HH:mm", "sv_SE");
     setupLocator();
   }
 
@@ -135,16 +135,27 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20.0),
-                              child: Text(
-                                '${dateFormat.format(DateTime.parse(widget.event.start))}-${new DateFormat("HH:mm").format(DateTime.parse(widget.event.end))}',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                            ),
-                          ],
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10.0),
+                        ),
+                        Text(
+                          '${dateFormat.format(DateTime.parse(widget.event.start))}-${new DateFormat("HH:mm").format(DateTime.parse(widget.event.end))}',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey.shade700,
+                          ),
+                        ),
+                        Text(
+                          "Plats: " + widget.event.place,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey.shade700,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
                         ),
                         Text(
                           widget.event.title,

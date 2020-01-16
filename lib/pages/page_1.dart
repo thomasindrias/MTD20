@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mtd20/animation/slide_right.dart';
 import 'package:mtd20/models/article.dart';
 import 'package:mtd20/pages/article_detail_screen.dart';
 import 'package:mtd20/styleguide.dart';
@@ -48,7 +47,7 @@ class _FirstPageState extends State<FirstPage> {
   @override
   void initState() {
     super.initState();
-    dateFormat = new DateFormat("d MMM, HH:mm", "sv_SE");
+    dateFormat = new DateFormat("d MMM HH:mm", "sv_SE");
     fetchData();
   }
 
@@ -178,9 +177,9 @@ class _FirstPageState extends State<FirstPage> {
                           Text(
                             dateFormat.format(DateTime.parse(articles[0].time)),
                             style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14.0,
-                            ),
+                                color: Colors.grey.shade600,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold),
                           ),
                           Spacer(),
                           Text(
@@ -228,6 +227,10 @@ class _FirstPageState extends State<FirstPage> {
             ),
             subtitle: Text(
               dateFormat.format(DateTime.parse(article.time)),
+              style: TextStyle(
+                  color: Colors.grey.shade600,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold),
             ),
             trailing: Container(
               width: 80.0,

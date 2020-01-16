@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mtd20/animation/slide_right.dart';
 import 'package:mtd20/models/event.dart';
 import 'package:mtd20/pages/event_detail_screen.dart';
 import 'package:mtd20/styleguide.dart';
@@ -24,13 +23,15 @@ class _SecondPageState extends State<SecondPage> {
   var url = "https://thomasindrias.github.io/mtd/data/events.json";
 
   Events events;
+  var firstIncomingEvent;
+  mtdEvent now;
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
   void _onRefresh() async {
     await fetchData();
-    dateFormat = new DateFormat("d MMM, HH:mm", "sv_SE");
+    dateFormat = new DateFormat("d MMM HH:mm", "sv_SE");
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
@@ -43,11 +44,21 @@ class _SecondPageState extends State<SecondPage> {
     _refreshController.loadComplete();
   }
 
+  void _currentEvents() {
+    for (var i = 0; i < events.events.length; i++) {
+      if (DateTime.now().isAfter(DateTime.parse(events.events[i].start)) &&
+          DateTime.now().isBefore(DateTime.parse(events.events[i].end))) {
+        now = events.events[i];
+        firstIncomingEvent = i + 1;
+      }
+    }
+  }
+
   int currentPage = 0;
   @override
   void initState() {
     super.initState();
-    dateFormat = new DateFormat("d MMM, HH:mm", "sv_SE");
+    dateFormat = new DateFormat("EEEE, HH:mm", "sv_SE");
     fetchData();
   }
 
@@ -56,6 +67,7 @@ class _SecondPageState extends State<SecondPage> {
     var decodedJson = jsonDecode(res.body);
     events = Events.fromJson(decodedJson);
 
+    _currentEvents();
     setState(() {});
   }
 
@@ -130,77 +142,97 @@ class _SecondPageState extends State<SecondPage> {
     return ListView(
       padding: const EdgeInsets.all(16.0),
       children: <Widget>[
-        const SizedBox(height: 16.0),
-        InkWell(
-          onTap: () {
-            Navigator.push(
-                context,
-                PageTransition(
-                    type: PageTransitionType.rightToLeftWithFade,
-                    child: EventDetailScreen(event: events[0]),
-                    curve: Curves.elasticInOut));
-          },
-          child: Card(
-            elevation: 4.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Stack(
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      height: 200.0,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10.0),
-                            topRight: Radius.circular(10.0),
-                          ),
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(events[0].image),
-                            fit: BoxFit.cover,
-                          )),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        events[0].title,
-                        style: AppTheme.articleTitleStyle,
+        (now != null)
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: Text("Just nu", style: AppTheme.display3),
+                  ),
+                  const SizedBox(height: 16.0),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.rightToLeftWithFade,
+                              child: EventDetailScreen(event: now),
+                              curve: Curves.elasticInOut));
+                    },
+                    child: Card(
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
+                      child: Stack(
                         children: <Widget>[
-                          Text(
-                            '${dateFormat.format(DateTime.parse(events[0].start))}-${new DateFormat("HH:mm").format(DateTime.parse(events[0].end))}',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                          Spacer(),
-                          Text(
-                            events[0].host,
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14.0,
-                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                height: 200.0,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10.0),
+                                      topRight: Radius.circular(10.0),
+                                    ),
+                                    image: DecorationImage(
+                                      image:
+                                          CachedNetworkImageProvider(now.image),
+                                      fit: BoxFit.cover,
+                                    )),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  now.title,
+                                  style: AppTheme.articleTitleStyle,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      'Slutar kl. ${new DateFormat("HH:mm").format(DateTime.parse(now.end))}',
+                                      style: TextStyle(
+                                          color: Colors.grey.shade600,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      now.place,
+                                      style: TextStyle(
+                                          color: Colors.grey.shade600,
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 20.0),
+                            ],
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20.0),
-                  ],
-                ),
-              ],
-            ),
-          ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Divider(),
+                ],
+              )
+            : Container(),
+        SizedBox(height: 20),
+        Padding(
+          padding: EdgeInsets.only(left: 15),
+          child: Text("Kommande evenemang", style: AppTheme.display3),
         ),
-        const SizedBox(height: 10.0),
-        Divider(),
-        for (var i = 1; i < events.length; i++) _buildCard(events[i])
+        for (var i = firstIncomingEvent; i < events.length; i++)
+          _buildCard(events[i])
       ],
     );
   }
@@ -226,7 +258,8 @@ class _SecondPageState extends State<SecondPage> {
             subtitle: Padding(
               padding: const EdgeInsets.symmetric(vertical: 4.0),
               child: Text(
-                '${dateFormat.format(DateTime.parse(event.start))}-${new DateFormat("HH:mm").format(DateTime.parse(event.end))}',
+                '${new DateFormat("EEEE d MMM 'kl.' HH:mm", "sv_SE").format(DateTime.parse(event.start))}',
+                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
               ),
             ),
             trailing: Container(

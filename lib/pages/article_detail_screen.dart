@@ -34,7 +34,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
   @override
   void initState() {
     super.initState();
-    dateFormat = new DateFormat("d MMM, HH:mm", "sv_SE");
+    dateFormat = new DateFormat("d MMM HH:mm", "sv_SE");
     setupLocator();
   }
 
