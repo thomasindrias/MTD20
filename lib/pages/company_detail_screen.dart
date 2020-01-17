@@ -157,7 +157,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                         ],
                       )),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(32, 0, 8, 20),
+                    padding: const EdgeInsets.fromLTRB(32, 0, 32, 20),
                     child: Text(
                       widget.company.info,
                       style: AppTheme.subHeading,

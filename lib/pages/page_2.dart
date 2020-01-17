@@ -46,10 +46,15 @@ class _SecondPageState extends State<SecondPage> {
 
   void _currentEvents() {
     for (var i = 0; i < events.events.length; i++) {
+      //Check if event is happening now
       if (DateTime.now().isAfter(DateTime.parse(events.events[i].start)) &&
           DateTime.now().isBefore(DateTime.parse(events.events[i].end))) {
         now = events.events[i];
-        firstIncomingEvent = i + 1;
+      }
+      //Find first incoming event
+      if (DateTime.now().isBefore(DateTime.parse(events.events[i].start))) {
+        firstIncomingEvent = i;
+        break;
       }
     }
   }
@@ -62,6 +67,7 @@ class _SecondPageState extends State<SecondPage> {
     fetchData();
   }
 
+  //Fetch json data from http
   fetchData() async {
     var res = await http.get(url);
     var decodedJson = jsonDecode(res.body);
@@ -142,8 +148,9 @@ class _SecondPageState extends State<SecondPage> {
     return ListView(
       padding: const EdgeInsets.all(16.0),
       children: <Widget>[
-        (now != null)
-            ? Column(
+        now == null
+            ? Container()
+            : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(height: 20),
@@ -224,8 +231,7 @@ class _SecondPageState extends State<SecondPage> {
                   const SizedBox(height: 10.0),
                   Divider(),
                 ],
-              )
-            : Container(),
+              ),
         SizedBox(height: 20),
         Padding(
           padding: EdgeInsets.only(left: 15),

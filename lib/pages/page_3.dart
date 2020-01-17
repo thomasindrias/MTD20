@@ -17,7 +17,7 @@ class ThirdPage extends StatefulWidget {
 }
 
 class _ThirdPageState extends State<ThirdPage> {
-  var url = "https://thomasindrias.github.io/mtd/data/companies.json";
+  var url = "https://thomasindrias.github.io/mtd/data/companies_secret.json";
 
   Companies companies;
 
@@ -41,6 +41,7 @@ class _ThirdPageState extends State<ThirdPage> {
     await fetchData();
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     if (mounted) setState(() {});
+
     _refreshController.loadComplete();
   }
 
@@ -50,8 +51,8 @@ class _ThirdPageState extends State<ThirdPage> {
     super.initState();
     fetchData();
     _pageController = PageController(
-      viewportFraction: 0.87,
-      initialPage: -5,
+      viewportFraction: 0.84,
+      initialPage: 5,
       keepPage: false,
     );
     scrollAnimation();
@@ -59,9 +60,9 @@ class _ThirdPageState extends State<ThirdPage> {
 
   Future scrollAnimation() async {
     try {
-      await Future.delayed(const Duration(milliseconds: 0), () {
+      await Future.delayed(const Duration(seconds: 1), () {
         _pageController.animateToPage(0,
-            curve: Curves.easeInOut, duration: Duration(seconds: 1));
+            curve: Curves.easeInOut, duration: Duration(seconds: 2));
       });
     } catch (e) {}
   }
@@ -71,6 +72,23 @@ class _ThirdPageState extends State<ThirdPage> {
     var decodedJson = jsonDecode(res.body);
 
     companies = Companies.fromJson(decodedJson);
+
+    // Sort gold
+    companies.gold.sort((a, b) {
+      return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+    });
+    // Sort silver
+    companies.silver.sort((a, b) {
+      return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+    });
+    // Sort brons
+    companies.brons.sort((a, b) {
+      return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+    });
+    // Sort other
+    companies.other.sort((a, b) {
+      return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+    });
 
     setState(() {});
   }

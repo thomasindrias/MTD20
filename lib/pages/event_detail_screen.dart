@@ -43,7 +43,7 @@ class _EventDetailScreenState extends State<EventDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
 
     return Scaffold(
@@ -120,6 +120,7 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                           child: PinchZoomImage(
                             image: PNetworkImage(
                               widget.event.image,
+                              width: screenWidth,
                               height: 300,
                               fit: BoxFit.cover,
                             ),

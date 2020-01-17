@@ -40,7 +40,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
 
     return Scaffold(
@@ -83,6 +83,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
                           child: PinchZoomImage(
                             image: PNetworkImage(
                               widget.article.imagePath,
+                              width: screenWidth,
                               height: 300,
                               fit: BoxFit.cover,
                             ),
@@ -94,7 +95,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
-                        left: 16.0, right: 16.0, bottom: 16.0),
+                        top: 10.0, left: 16.0, right: 16.0, bottom: 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[

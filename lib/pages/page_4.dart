@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mtd20/styleguide.dart';
@@ -7,6 +8,7 @@ import 'package:map_launcher/map_launcher.dart';
 import 'package:mtd20/widgets/character_widget.dart';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FourthPage extends StatefulWidget {
   @override
@@ -193,6 +195,11 @@ class _FourthPageState extends State<FourthPage> {
                       onLoading: _onLoading,
                       child: ListView(
                         children: <Widget>[
+                          SizedBox(height: 20),
+                          Padding(
+                            padding: EdgeInsets.only(left: 15),
+                            child: Text("Gruppen", style: AppTheme.display3),
+                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
@@ -212,15 +219,15 @@ class _FourthPageState extends State<FourthPage> {
                               ),
                               SizedBox(height: 20.0),
                               Container(
-                                height: 300,
+                                height: 350,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Padding(
-                                      padding: const EdgeInsets.all(20.0),
+                                      padding: const EdgeInsets.all(15.0),
                                       child: Text(
                                         aboutTitle,
-                                        style: AppTheme.displayBold,
+                                        style: AppTheme.display3,
                                       ),
                                     ),
                                     Divider(),
@@ -228,10 +235,38 @@ class _FourthPageState extends State<FourthPage> {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 18.0),
-                                        child: Text(
-                                          about,
-                                          style:
-                                              AppTheme.articleDescriptionStyle,
+                                        child: new RichText(
+                                          text: new TextSpan(
+                                            children: [
+                                              new TextSpan(
+                                                text: about,
+                                                style: AppTheme
+                                                    .articleDescriptionStyle,
+                                              ),
+                                              new TextSpan(
+                                                text: '\n\nLäs mer på: ',
+                                                style: TextStyle(
+                                                    color: Colors.black87,
+                                                    fontSize: 20.0,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              new TextSpan(
+                                                text: '\nmedieteknikdagarna.se',
+                                                style: TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 20.0,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                                recognizer:
+                                                    new TapGestureRecognizer()
+                                                      ..onTap = () {
+                                                        launch(
+                                                            'http://www.medieteknikdagarna.se/sv/foretag/');
+                                                      },
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     )

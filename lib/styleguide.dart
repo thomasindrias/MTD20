@@ -62,4 +62,10 @@ class AppTheme {
     fontSize: 20.0,
     //fontWeight: FontWeight.bold,
   );
+  static final TextStyle articleLinkStyle = TextStyle(
+    //fontFamily: 'WorkSans',
+    color: Colors.blue,
+    fontSize: 20.0,
+    //fontWeight: FontWeight.bold,
+  );
 }
