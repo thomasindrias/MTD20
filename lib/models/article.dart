@@ -31,6 +31,7 @@ class ArticleElement {
   String description;
   String time;
   String author;
+  String website;
 
   ArticleElement({
     this.title,
@@ -38,6 +39,7 @@ class ArticleElement {
     this.description,
     this.time,
     this.author,
+    this.website,
   });
 
   factory ArticleElement.fromJson(Map<String, dynamic> json) => ArticleElement(
@@ -46,6 +48,7 @@ class ArticleElement {
         description: json["description"],
         time: json["time"],
         author: json["author"],
+        website: json["website"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -54,5 +57,6 @@ class ArticleElement {
         "description": description,
         "time": time,
         "author": author,
+        "website": website,
       };
 }

@@ -1,4 +1,5 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mtd20/models/article.dart';
@@ -6,6 +7,7 @@ import 'package:mtd20/services/contact_service.dart';
 import 'package:pos_pinch_zoom_image/pos_pinch_zoom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mtd20/models/network_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ArticleDetailScreen extends StatefulWidget {
   // final double _expandedBottomSheetBottomPosition = 0;
@@ -29,6 +31,15 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
 
   void setupLocator() {
     locator.registerSingleton(CallsAndMessagesService());
+  }
+
+  _launchURL() async {
+    String url = widget.article.website;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -111,12 +122,26 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
                                   style: TextStyle(fontSize: 15),
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
-                        Text(
-                          widget.article.title,
-                          style: Theme.of(context).textTheme.title,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              widget.article.title,
+                              style: Theme.of(context).textTheme.title,
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                FontAwesomeIcons.externalLinkAlt,
+                                color: Colors.black87,
+                                size: 26,
+                              ),
+                              onPressed: _launchURL,
+                              splashColor: Colors.transparent,
+                            ),
+                          ],
                         ),
                         Divider(),
                         SizedBox(
