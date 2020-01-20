@@ -17,7 +17,7 @@ class ThirdPage extends StatefulWidget {
 }
 
 class _ThirdPageState extends State<ThirdPage> {
-  var url = "https://thomasindrias.github.io/mtd/data/companies_secret.json";
+  var url = "https://thomasindrias.github.io/mtd/data/companies.json";
 
   Companies companies;
 
@@ -67,7 +67,7 @@ class _ThirdPageState extends State<ThirdPage> {
     } catch (e) {}
   }
 
-  fetchData() async {
+  Future fetchData() async {
     var res = await http.get(url);
     var decodedJson = jsonDecode(res.body);
 
@@ -95,6 +95,8 @@ class _ThirdPageState extends State<ThirdPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(85),
@@ -158,7 +160,7 @@ class _ThirdPageState extends State<ThirdPage> {
                           child: Text("Guldpartners", style: AppTheme.display3),
                         ),
                         Container(
-                          height: 400,
+                          height: screenHeight * 0.60,
                           child: PageView(
                             //physics: ClampingScrollPhysics(),
                             controller: _pageController,

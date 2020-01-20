@@ -37,6 +37,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Dismissible(
@@ -98,7 +99,9 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                                   size: 100.0,
                                 ),
                                 imageUrl: widget.company.logo,
-                                height: screenHeight * 0.45,
+                                height: screenHeight * 0.35,
+                                width: screenWidth * 0.75,
+                                fit: BoxFit.contain,
                               ),
                               zoomedBackgroundColor:
                                   Color.fromRGBO(240, 240, 240, 1.0),

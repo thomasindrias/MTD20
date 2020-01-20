@@ -63,7 +63,7 @@ class CharacterWidget extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: Alignment(0, -0.4),
+                alignment: Alignment(0, -0.2),
                 child: Hero(
                   tag: "image-${company.name}",
                   child: Padding(
@@ -74,7 +74,8 @@ class CharacterWidget extends StatelessWidget {
                         size: 100.0,
                       ),
                       imageUrl: company.logo,
-                      height: screenHeight * 0.38 * value,
+                      height: screenHeight * 0.40 * value,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),

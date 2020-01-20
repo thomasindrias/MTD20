@@ -118,8 +118,6 @@ class _FourthPageState extends State<FourthPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(10.0),
