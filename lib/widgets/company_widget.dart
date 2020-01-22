@@ -73,6 +73,7 @@ class CharacterWidget extends StatelessWidget {
                         color: Colors.white,
                         size: 100.0,
                       ),
+                      alignment: Alignment(0, -0.2),
                       imageUrl: company.logo,
                       height: screenHeight * 0.40 * value,
                       fit: BoxFit.contain,
