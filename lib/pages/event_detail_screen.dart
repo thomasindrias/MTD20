@@ -37,7 +37,7 @@ class _EventDetailScreenState extends State<EventDetailScreen>
   @override
   void initState() {
     super.initState();
-    dateFormat = new DateFormat("d MMM HH:mm", "sv_SE");
+    dateFormat = new DateFormat("d MMM", "sv_SE");
     setupLocator();
   }
 
@@ -140,7 +140,7 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                           padding: EdgeInsets.symmetric(vertical: 10.0),
                         ),
                         Text(
-                          '${dateFormat.format(DateTime.parse(widget.event.start))}-${new DateFormat("HH:mm").format(DateTime.parse(widget.event.end))}',
+                          '${dateFormat.format(DateTime.parse(widget.event.start))} ${widget.event.time}',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
