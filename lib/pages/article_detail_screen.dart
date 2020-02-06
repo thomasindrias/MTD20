@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mtd20/models/article.dart';
 import 'package:mtd20/services/contact_service.dart';
-import 'package:pos_pinch_zoom_image/pos_pinch_zoom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mtd20/models/network_image.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -89,19 +88,15 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
                   Stack(
                     children: <Widget>[
                       Container(
+                        height: 300,
+                        width: double.infinity,
+                        child: PNetworkImage(
+                          widget.article.imagePath,
+                          width: screenWidth,
                           height: 300,
-                          width: double.infinity,
-                          child: PinchZoomImage(
-                            image: PNetworkImage(
-                              widget.article.imagePath,
-                              width: screenWidth,
-                              height: 300,
-                              fit: BoxFit.cover,
-                            ),
-                            zoomedBackgroundColor:
-                                Color.fromRGBO(240, 240, 240, 1.0),
-                            hideStatusBarWhileZooming: true,
-                          )),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ],
                   ),
                   Padding(

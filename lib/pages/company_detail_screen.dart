@@ -6,7 +6,6 @@ import 'package:mtd20/models/companies.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:pos_pinch_zoom_image/pos_pinch_zoom_image.dart';
 
 class CharacterDetailScreen extends StatefulWidget {
   // final double _expandedBottomSheetBottomPosition = 0;
@@ -92,20 +91,15 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
-                            child: PinchZoomImage(
-                              image: CachedNetworkImage(
-                                placeholder: (context, url) => SpinKitPulse(
-                                  color: Colors.white,
-                                  size: 100.0,
-                                ),
-                                imageUrl: widget.company.logo,
-                                height: screenHeight * 0.35,
-                                width: screenWidth * 0.75,
-                                fit: BoxFit.contain,
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) => SpinKitPulse(
+                                color: Colors.white,
+                                size: 100.0,
                               ),
-                              zoomedBackgroundColor:
-                                  Color.fromRGBO(240, 240, 240, 1.0),
-                              hideStatusBarWhileZooming: true,
+                              imageUrl: widget.company.logo,
+                              height: screenHeight * 0.35,
+                              width: screenWidth * 0.75,
+                              fit: BoxFit.contain,
                             ),
                           ),
                         )),
