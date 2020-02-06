@@ -208,40 +208,43 @@ class _FirstPageState extends State<FirstPage> {
   }
 
   Widget _buildCard(ArticleElement article) {
-    return Padding(
-        padding:
-            EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-                context,
-                PageTransition(
-                    type: PageTransitionType.rightToLeftWithFade,
-                    child: ArticleDetailScreen(article: article),
-                    curve: Curves.elasticInOut));
-          },
-          child: ListTile(
-            title: Text(
-              article.title,
-              style: AppTheme.articleTitleStyle,
-            ),
-            subtitle: Text(
-              dateFormat.format(DateTime.parse(article.time)),
-              style: TextStyle(
-                  color: Colors.grey.shade600,
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.bold),
-            ),
-            trailing: Container(
-              width: 80.0,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(article.imagePath),
-                    fit: BoxFit.cover,
-                  )),
-            ),
+    return InkWell(
+      splashColor: Colors.orange.withOpacity(0.8),
+      highlightColor: Colors.white60,
+      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      onTap: () {
+        Navigator.push(
+            context,
+            PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: ArticleDetailScreen(article: article),
+                curve: Curves.elasticInOut));
+      },
+      child: Padding(
+        padding: EdgeInsets.only(top: 4.0, bottom: 4.0, left: 4.0, right: 4.0),
+        child: ListTile(
+          title: Text(
+            article.title,
+            style: AppTheme.articleTitleStyle,
           ),
-        ));
+          subtitle: Text(
+            dateFormat.format(DateTime.parse(article.time)),
+            style: TextStyle(
+                color: Colors.grey.shade600,
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold),
+          ),
+          trailing: Container(
+            width: 80.0,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                image: DecorationImage(
+                  image: CachedNetworkImageProvider(article.imagePath),
+                  fit: BoxFit.cover,
+                )),
+          ),
+        ),
+      ),
+    );
   }
 }

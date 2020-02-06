@@ -115,7 +115,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen>
                             Expanded(
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                    const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Text(
                                   dateFormat.format(
                                       DateTime.parse(widget.article.time)),

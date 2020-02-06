@@ -160,6 +160,8 @@ class _SecondPageState extends State<SecondPage> {
                   ),
                   const SizedBox(height: 16.0),
                   InkWell(
+                    splashColor: Colors.orange.withOpacity(0.8),
+                    highlightColor: Colors.white60,
                     onTap: () {
                       Navigator.push(
                           context,
@@ -237,6 +239,9 @@ class _SecondPageState extends State<SecondPage> {
           padding: EdgeInsets.only(left: 15),
           child: Text("Kommande evenemang", style: AppTheme.display3),
         ),
+        SizedBox(
+          height: 10,
+        ),
         for (var i = firstIncomingEvent; i < events.length; i++)
           _buildCard(events[i])
       ],
@@ -244,40 +249,44 @@ class _SecondPageState extends State<SecondPage> {
   }
 
   Widget _buildCard(mtdEvent event) {
-    return Padding(
-        padding:
-            EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-                context,
-                PageTransition(
-                    type: PageTransitionType.rightToLeftWithFade,
-                    child: EventDetailScreen(event: event),
-                    curve: Curves.elasticInOut));
-          },
-          child: ListTile(
-            title: Text(
-              event.title,
-              style: AppTheme.articleTitleStyle,
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0),
-              child: Text(
-                '${new DateFormat("EEEE d MMM 'kl.' HH:mm", "sv_SE").format(DateTime.parse(event.start))}',
-                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-              ),
-            ),
-            trailing: Container(
-              width: 80.0,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(event.image),
-                    fit: BoxFit.cover,
-                  )),
+    return InkWell(
+      splashColor: Colors.orange.withOpacity(0.8),
+      highlightColor: Colors.white60,
+      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      onTap: () {
+        Navigator.push(
+            context,
+            PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: EventDetailScreen(event: event),
+                curve: Curves.elasticInOut));
+      },
+      child: Padding(
+        padding: EdgeInsets.only(top: 4.0, bottom: 4.0, left: 4.0, right: 4.0),
+        child: ListTile(
+          title: Text(
+            event.title,
+            style: AppTheme.articleTitleStyle,
+          ),
+          subtitle: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Text(
+              '${new DateFormat("EEEE d MMM 'kl.' HH:mm", "sv_SE").format(DateTime.parse(event.start))}',
+              style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
             ),
           ),
-        ));
+          trailing: Container(
+            width: 80.0,
+            height: 90.0,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                image: DecorationImage(
+                  image: CachedNetworkImageProvider(event.image),
+                  fit: BoxFit.cover,
+                )),
+          ),
+        ),
+      ),
+    );
   }
 }
