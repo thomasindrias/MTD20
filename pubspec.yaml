@@ -39,6 +39,7 @@ dependencies:
   permission_handler: ^4.2.0+hotfix.3
   intro_slider: ^2.2.8
   shared_preferences: ^0.5.6
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:

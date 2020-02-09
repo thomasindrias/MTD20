@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mtd20/models/companies.dart';
@@ -92,9 +93,10 @@ class CharacterWidget extends StatelessWidget {
                       child: Material(
                         color: Colors.transparent,
                         child: Container(
-                          child: Text(
+                          child: AutoSizeText(
                             company.name,
                             style: AppTheme.heading,
+                            maxLines: 1,
                           ),
                         ),
                       ),

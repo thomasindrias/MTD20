@@ -5,6 +5,7 @@ import 'package:mtd20/pages/character_detail_screen.dart';
 import 'package:mtd20/styleguide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class CharacterWidget extends StatelessWidget {
   final Character character;
@@ -86,9 +87,10 @@ class CharacterWidget extends StatelessWidget {
                         color: Colors.transparent,
                         child: Container(
                           width: screenWidth * 0.75,
-                          child: Text(
+                          child: AutoSizeText(
                             character.role,
                             style: AppTheme.heading,
+                            maxLines: 1,
                           ),
                         ),
                       ),
