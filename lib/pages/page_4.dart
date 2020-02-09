@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -223,9 +224,10 @@ class _FourthPageState extends State<FourthPage> {
                                   children: <Widget>[
                                     Padding(
                                       padding: const EdgeInsets.all(15.0),
-                                      child: Text(
+                                      child: AutoSizeText(
                                         aboutTitle,
                                         style: AppTheme.display3,
+                                        maxLines: 1,
                                       ),
                                     ),
                                     Divider(),
