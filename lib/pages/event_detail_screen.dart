@@ -61,8 +61,7 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                     : widget.event.description,
                 location: widget.event.place,
                 startDate: DateTime.parse(widget.event.start),
-                endDate:
-                    DateTime.parse(widget.event.end).add(Duration(hours: 2)),
+                endDate: DateTime.parse(widget.event.end),
                 allDay: false,
               )).then((success) {
                 scaffoldState.currentState.showSnackBar(SnackBar(
