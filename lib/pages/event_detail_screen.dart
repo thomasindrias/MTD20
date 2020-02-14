@@ -56,11 +56,13 @@ class _EventDetailScreenState extends State<EventDetailScreen>
             onPressed: () {
               Add2Calendar.addEvent2Cal(Event(
                 title: '${widget.event.title} med ${widget.event.host}',
-                description: widget.event.description,
+                description: widget.event.description == null
+                    ? ""
+                    : widget.event.description,
                 location: widget.event.place,
-                startDate: DateTime.parse("2020-03-05T08:30:00+0100"),
-                endDate: DateTime.parse("2020-03-05T08:30:00+0100")
-                    .add(Duration(hours: 2)),
+                startDate: DateTime.parse(widget.event.start),
+                endDate:
+                    DateTime.parse(widget.event.end).add(Duration(hours: 2)),
                 allDay: false,
               )).then((success) {
                 scaffoldState.currentState.showSnackBar(SnackBar(
