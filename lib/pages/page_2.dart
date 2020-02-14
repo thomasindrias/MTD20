@@ -47,12 +47,15 @@ class _SecondPageState extends State<SecondPage> {
   void _currentEvents() {
     for (var i = 0; i < events.events.length; i++) {
       //Check if event is happening now
-      if (DateTime.now().isAfter(DateTime.parse(events.events[i].start)) &&
-          DateTime.now().isBefore(DateTime.parse(events.events[i].end))) {
+      if (DateTime.now().isAfter(DateTime.parse(events.events[i].start)
+              .add(new Duration(hours: 1))) &&
+          DateTime.now().isBefore(DateTime.parse(events.events[i].end)
+              .add(new Duration(hours: 1)))) {
         now = events.events[i];
       }
       //Find first incoming event
-      if (DateTime.now().isBefore(DateTime.parse(events.events[i].start))) {
+      if (DateTime.now().isBefore(
+          DateTime.parse(events.events[i].start).add(new Duration(hours: 1)))) {
         firstIncomingEvent = i;
         break;
       }
@@ -206,7 +209,7 @@ class _SecondPageState extends State<SecondPage> {
                                 child: Row(
                                   children: <Widget>[
                                     Text(
-                                      'Slutar kl. ${new DateFormat("HH:mm").format(DateTime.parse(now.end))}',
+                                      'Slutar kl. ${new DateFormat("HH:mm").format(DateTime.parse(now.end).add(new Duration(hours: 1)))}',
                                       style: TextStyle(
                                           color: Colors.grey.shade600,
                                           fontSize: 15.0,
@@ -271,7 +274,7 @@ class _SecondPageState extends State<SecondPage> {
           subtitle: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
-              '${new DateFormat("EEEE d MMM 'kl.' HH:mm", "sv_SE").format(DateTime.parse(event.start))}',
+              '${new DateFormat("EEEE d MMM 'kl.' HH:mm", "sv_SE").format(DateTime.parse(event.start).add(new Duration(hours: 1)))}',
               style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
             ),
           ),
