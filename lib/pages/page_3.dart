@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -276,13 +277,17 @@ class _ThirdPageState extends State<ThirdPage> {
                                     fit: BoxFit.contain)))),
                   ),
                   Expanded(
-                    child: Center(
-                      child: Text(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Center(
+                          child: AutoSizeText(
                         company.name,
                         style:
                             TextStyle(color: Color(0xFF575E67), fontSize: 20.0),
                         textAlign: TextAlign.center,
-                      ),
+                        maxLines: 2,
+                        wrapWords: false,
+                      )),
                     ),
                   ),
                   Padding(

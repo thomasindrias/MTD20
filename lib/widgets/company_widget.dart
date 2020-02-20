@@ -97,6 +97,7 @@ class CharacterWidget extends StatelessWidget {
                             company.name,
                             style: AppTheme.heading,
                             maxLines: 1,
+                            wrapWords: false,
                           ),
                         ),
                       ),

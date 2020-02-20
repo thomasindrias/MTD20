@@ -150,6 +150,15 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                             color: Colors.grey.shade700,
                           ),
                         ),
+                        if (widget.event.description == null)
+                          Text(
+                            "Värd: " + widget.event.host,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 8.0),
                         ),
@@ -161,13 +170,22 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                         SizedBox(
                           height: 10.0,
                         ),
+                        if (widget.event.description != null)
+                          Text(
+                            "Värd: " + widget.event.host,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
                         SizedBox(
                           height: 10.0,
                         ),
                         widget.event.description != null
                             ? Text(
                                 widget.event.description,
-                                textAlign: TextAlign.justify,
+                                textAlign: TextAlign.left,
                                 style: TextStyle(
                                     fontSize: 16,
                                     height: 1.3,

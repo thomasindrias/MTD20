@@ -1,4 +1,5 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -114,9 +115,12 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen>
                             child: Row(
                               children: <Widget>[
                                 Expanded(
-                                  child: Text(widget.company.name,
-                                      style: AppTheme.heading),
-                                ),
+                                    child: AutoSizeText(
+                                  widget.company.name,
+                                  style: AppTheme.heading,
+                                  maxLines: 2,
+                                  wrapWords: false,
+                                )),
                                 IconButton(
                                   icon: Icon(
                                     FontAwesomeIcons.externalLinkAlt,
